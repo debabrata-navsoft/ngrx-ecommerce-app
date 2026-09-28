@@ -27,6 +27,7 @@
 .input-box {
   display: flex;
   flex-direction: column;
+  gap:1rem;
 }
 
 .input-box label {

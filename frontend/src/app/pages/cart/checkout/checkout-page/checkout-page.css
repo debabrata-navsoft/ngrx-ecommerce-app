@@ -214,6 +214,51 @@ button:hover {
   margin-top: 10px;
 }
 
+/* ---------- responsive ---------- */
+
+/* Prices must not break between "₹" and the amount, and the thumbnails must not be squeezed
+   by the flex row. */
+.summary-row span:last-child,
+.summary-total span:last-child,
+.final-price,
+.original-price-mrp {
+  white-space: nowrap;
+}
+
+.cart-item img {
+  flex-shrink: 0;
+}
+
+/* Tablet landscape: the 2:1 split plus a 4rem gap left the Order Summary ~170px of content,
+   so prices ran off the card. Give it a fixed column instead. */
+@media (max-width: 1200px) {
+  .checkout-container {
+    gap: 1.5rem;
+  }
+
+  .checkout-left {
+    padding: 24px;
+  }
+
+  .checkout-right {
+    flex: 0 0 320px;
+    padding: 24px;
+  }
+}
+
+/* Tablet portrait and below: the address list and shipping cards need the full width, so the
+   summary moves under them at full width too. */
+@media (max-width: 992px) {
+  .checkout-container {
+    flex-direction: column;
+  }
+
+  .checkout-right {
+    flex: none;
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .checkout-container {
     flex-direction: column;
@@ -221,6 +266,16 @@ button:hover {
 
   .form-row {
     flex-direction: column;
+  }
+
+  /* Free / Express side by side overflowed a phone ("white-space: nowrap" titles). */
+  .shipping-methods {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .shipping-card {
+    padding: 14px 16px;
   }
 }
 

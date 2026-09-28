@@ -14,28 +14,9 @@ app-header {
 .page-container {
   flex: 1;
   max-width: 100%;
-  margin: 0 5rem;
+  margin: 0 var(--page-gutter);
   min-height: 100vh;
-  padding-top: 9.5rem;
-}
-
-/* .app-wrapper {
-  display: flex;
-  flex-direction: column;
-}
-
-.page-container {
-  flex: 1;
-  max-width: 100%;
-  margin: 0 5rem;
-  min-height: 100vh;
-} */
-
-.breadcrumb {
-  background: white;
-  max-width: 100%;
-  margin: 0 5rem;
-  padding: 0 4px;
+  padding-top: var(--header-offset);
 }
 
 .page-container.auth-page {
@@ -46,4 +27,16 @@ app-header {
   align-items: center;
   justify-content: center;
   padding-top: 0;
+}
+
+/* Below 768px the header wraps to three rows; fixed, it would cover a third of a phone
+   screen, so it scrolls away with the page instead (--header-offset drops to 0 there). */
+@media (max-width: 768px) {
+  app-header {
+    position: static;
+  }
+
+  .page-container {
+    min-height: auto;
+  }
 }

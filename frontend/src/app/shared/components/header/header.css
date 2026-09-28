@@ -6,7 +6,7 @@
   width: 100%;
   background: white;
   font-family: Arial, sans-serif;
-  padding: 18px 5rem;
+  padding: 18px var(--page-gutter);
   padding-bottom: 8px;
 }
 
@@ -317,4 +317,69 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 992px) {
+  .search-box {
+    max-width: none;
+  }
+}
+
+/* Phone: logo and icons share the first row, search takes a full-width second row. */
+@media (max-width: 768px) {
+  .top-header {
+    position: relative;
+    padding-top: 12px;
+  }
+
+  .header-top {
+    flex-wrap: wrap;
+    gap: 10px 12px;
+  }
+
+  .logo {
+    order: 1;
+    align-items: flex-start;
+  }
+
+  .logo a {
+    font-size: 22px;
+    margin-bottom: 0;
+  }
+
+  .logo small {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+  }
+
+  .header-icons {
+    order: 2;
+    margin-left: auto;
+    gap: 6px;
+  }
+
+  .icons {
+    gap: 4px;
+  }
+
+  .search-box {
+    order: 3;
+    flex: 1 0 100%;
+  }
+
+  .search-box input {
+    height: 42px;
+  }
+
+  .search-box button {
+    height: 42px;
+  }
+
+  /* Account menu: anchor to the right gutter instead of 200px in from the edge. */
+  .dropdown {
+    top: 56px;
+    right: var(--page-gutter);
+  }
 }

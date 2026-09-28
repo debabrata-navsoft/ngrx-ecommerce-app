@@ -2,7 +2,7 @@
 .footer {
   background-color: #000;
   color: #fff;
-  padding: 20px 5rem;
+  padding: 20px var(--page-gutter);
   /* padding: 20px 40px; */
   font-family: Arial, sans-serif;
 }
@@ -104,5 +104,29 @@
     lucide-icon {
       font-size: 1.2rem;
     }
+  }
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 768px) {
+  .footer {
+    padding-top: 28px;
+  }
+
+  /* Two link columns side by side; the brand block spans the full width above them. */
+  .footer-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 16px;
+  }
+
+  .footer-left {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-container {
+    grid-template-columns: 1fr;
   }
 }

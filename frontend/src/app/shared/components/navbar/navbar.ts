@@ -1,4 +1,13 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import {
+  afterNextRender,
+  Component,
+  DestroyRef,
+  ElementRef,
+  inject,
+  OnInit,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
@@ -35,6 +44,35 @@ export class Navbar implements OnInit {
 
   menu = signal(MENU);
   categories = signal(CATEGORIES);
+
+  // Arrows for the category row, shown only while it is wider than the screen (phones and
+  // tablets) and hidden at whichever end it has reached.
+  private categoryRow = viewChild<ElementRef<HTMLElement>>('categoryRow');
+  canScrollLeft = signal(false);
+  canScrollRight = signal(false);
+
+  constructor() {
+    // Browser only: measuring needs real layout, and running after hydration keeps the
+    // server-rendered HTML (no arrows) identical to the client's first render.
+    afterNextRender(() => {
+      this.updateScrollArrows();
+      const onResize = () => this.updateScrollArrows();
+      window.addEventListener('resize', onResize);
+      this.destroyRef.onDestroy(() => window.removeEventListener('resize', onResize));
+    });
+  }
+
+  updateScrollArrows() {
+    const row = this.categoryRow()?.nativeElement;
+    if (!row) return;
+    this.canScrollLeft.set(row.scrollLeft > 1);
+    this.canScrollRight.set(row.scrollLeft + row.clientWidth < row.scrollWidth - 1);
+  }
+
+  scrollCategories(direction: 1 | -1) {
+    const row = this.categoryRow()?.nativeElement;
+    row?.scrollBy({ left: direction * row.clientWidth * 0.7, behavior: 'smooth' });
+  }
 
   get authReady() {
     return this.authService.isAuthReady();

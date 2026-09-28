@@ -308,14 +308,42 @@ hr {
 }
 
 /* ── Responsive ── */
+@media (max-width: 992px) {
+  .payment-page {
+    gap: 1.5rem;
+  }
+}
+
+/* Phone: one full-width column. `align-items: flex-start` (right for the desktop row) made
+   each stacked panel shrink to its own content, so the two cards had different widths;
+   the desktop 4rem gap left a band of grey between them; and the extra 1rem padding
+   doubled the page gutter. */
 @media (max-width: 768px) {
   .payment-page {
     flex-direction: column;
-    padding: 1rem;
+    align-items: stretch;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .payment-left,
+  .payment-right {
+    width: 100%;
+    padding: 20px 16px;
+  }
+
+  .payment-left h2,
+  .payment-right h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
   }
 
   .payment-right {
     position: static;
+  }
+
+  .payment-card {
+    padding: 0.85rem 1rem;
   }
 }
 

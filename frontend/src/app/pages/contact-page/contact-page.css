@@ -37,6 +37,7 @@ label {
 input,
 textarea {
   width: 100%;
+  box-sizing: border-box;
   padding: 0.6rem 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;

@@ -186,7 +186,7 @@
     gap: 20px;
   }
 
-  .navbar ul {
+  .nav-item {
     flex-wrap: wrap;
   }
 }
@@ -196,8 +196,45 @@
     flex-wrap: wrap;
   }
 
-  .navbar ul {
+  /* Phone: "Shop by categories" and the delivery note share the first row; the category
+     links get a full-width second row that swipes sideways. Target .nav-wrapper / .nav-item,
+     never `.navbar ul` — that also matches the drawer's menu list (.sidebar-item). */
+  .navbar {
+    flex-wrap: wrap;
+    gap: 0 12px;
+  }
+
+  .nav-wrapper {
+    order: 3;
+    flex: 1 0 100%;
+    min-width: 0;
+    border-top: 1px solid #f1f3f5;
+  }
+
+  .nav-item {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .nav-item::-webkit-scrollbar {
     display: none;
+  }
+
+  .nav-link {
+    padding: 9px 10px;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+
+  .nav-link:first-child {
+    padding-left: 0;
+  }
+
+  /* 380px is wider than a 375px phone; leave a strip of the page visible to tap closed. */
+  .sidebar {
+    width: min(380px, 85vw);
   }
 }
 .nav-wrapper {
@@ -314,4 +351,109 @@ avatar-container {
   color: white;
   font-size: 20px;
   font-weight: 600;
+}
+/* ---------- responsive: tablet landscape ---------- */
+
+/* 769–1200px: the ten category links plus "Free International Delivery" do not fit on one
+   row, and flexbox squeezed them until "Home & Living" wrapped onto three lines. Keep each
+   label on one line, tighten the spacing, drop the delivery note, and let the row scroll
+   sideways if a narrow tablet still cannot fit it. (<=768px hides the links entirely.) */
+@media (min-width: 769px) and (max-width: 1200px) {
+  /* Overrides the older <=992px rule that wrapped the links onto two extra rows. */
+  .navbar {
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+
+  .nav-item {
+    flex-wrap: nowrap;
+  }
+
+  .category-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+
+  /* The dropdown is position: fixed, so this scroll box does not clip it. */
+  .nav-wrapper {
+    min-width: 0;
+  }
+
+  .nav-item {
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav-item::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-link {
+    padding: 10px 7px;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+
+  .delivery {
+    display: none;
+  }
+}
+
+/* The subcategory dropdown opens on mouseenter. A tap fires mouseenter and then click, and the
+   click already navigates to the category, so on a touchscreen the dropdown could only flash
+   open. Subcategories stay reachable there through the "Shop by categories" drawer. */
+@media (hover: none) {
+  .dropdown {
+    display: none;
+  }
+}
+
+/* ---------- category row scroll arrows ---------- */
+
+.nav-scroller {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.nav-scroller .nav-item {
+  flex: 1;
+  min-width: 0;
+}
+
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid #dee2e6;
+  border-radius: 50%;
+  background: #fff;
+  color: #212529;
+  cursor: pointer;
+  transform: translateY(-50%);
+  /* The white halo fades out the link text underneath the button. */
+  box-shadow:
+    0 0 10px 8px #fff,
+    0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.nav-arrow lucide-icon {
+  font-size: 18px;
+}
+
+.nav-arrow--left {
+  left: 0;
+}
+
+.nav-arrow--right {
+  right: 0;
 }

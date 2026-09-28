@@ -359,3 +359,26 @@ button:hover {
   background: #28a745;
   color: #fff;
 } */
+/* ---------- responsive ---------- */
+
+/* 48% columns wrap one per row on a phone but keep half the width; go full width. */
+@media (max-width: 768px) {
+  .add-product-container {
+    margin: 0;
+    padding: 20px 16px;
+    border-radius: 12px;
+  }
+
+  h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+
+  .grid-form {
+    gap: 16px;
+  }
+
+  .form-group {
+    width: 100%;
+  }
+}

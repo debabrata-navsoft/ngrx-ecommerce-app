@@ -69,17 +69,41 @@
   </div>
 
   <div class="nav-wrapper" (mouseleave)="closeDropdown()">
-    <ul class="nav-item">
-      @for (cat of categories(); track cat.name) {
-        <li
-          class="nav-link"
-          (mouseenter)="openDropdown(cat, $event)"
-          (click)="goToMainCategory(cat)"
+    <div class="nav-scroller">
+      @if (canScrollLeft()) {
+        <button
+          type="button"
+          class="nav-arrow nav-arrow--left"
+          aria-label="Scroll categories left"
+          (click)="scrollCategories(-1)"
         >
-          {{ cat.name }}
-        </li>
+          <lucide-icon name="chevron-left" />
+        </button>
       }
-    </ul>
+
+      <ul class="nav-item" #categoryRow (scroll)="updateScrollArrows()">
+        @for (cat of categories(); track cat.name) {
+          <li
+            class="nav-link"
+            (mouseenter)="openDropdown(cat, $event)"
+            (click)="goToMainCategory(cat)"
+          >
+            {{ cat.name }}
+          </li>
+        }
+      </ul>
+
+      @if (canScrollRight()) {
+        <button
+          type="button"
+          class="nav-arrow nav-arrow--right"
+          aria-label="Scroll categories right"
+          (click)="scrollCategories(1)"
+        >
+          <lucide-icon name="chevron-right" />
+        </button>
+      }
+    </div>
 
     <!-- DROPDOWN -->
     @if (isDropdownOpen() && selectedCategory()) {

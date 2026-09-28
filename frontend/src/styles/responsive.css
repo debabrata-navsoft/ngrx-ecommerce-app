@@ -1,0 +1,97 @@
+/*
+ * Responsive foundation — breakpoints, shared layout tokens and global mobile rules.
+ *
+ * Breakpoints (max-width, desktop-first like the rest of the app). Custom media queries
+ * are not supported by browsers yet, so every stylesheet repeats these numbers — keep them
+ * to this set:
+ *
+ *   1200px  small laptop
+ *    992px  tablet landscape
+ *    768px  tablet portrait / large phone — the main "mobile" switch
+ *    480px  small phone
+ *
+ * Why component layouts are not overridden here: Angular scopes component styles with an
+ * attribute selector (`.card[_ngcontent-…]`), which outranks any plain global selector, so a
+ * rule in this file loses to the component's own rule unless it uses !important. Layout
+ * changes therefore live in each component's stylesheet, inside the breakpoints above, and
+ * read the tokens defined here. This file only holds what is genuinely global.
+ */
+
+:root {
+  /* Horizontal page gutter: header, breadcrumb, page body and footer all align to it. */
+  --page-gutter: 5rem;
+
+  /* Space the fixed customer header occupies above the page body. */
+  --header-offset: 9.5rem;
+}
+
+@media (max-width: 1200px) {
+  :root {
+    --page-gutter: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --page-gutter: 1rem;
+    /* The header stops being fixed below 768px (see customer-layout.css). */
+    --header-offset: 0px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --page-gutter: 0.75rem;
+  }
+}
+
+/* ---------- global base ---------- */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+img,
+video,
+canvas {
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  /* iOS Safari zooms the page when a focused field's font is under 16px, and does not zoom
+     back out. The component rules set 14px on many fields, hence !important. */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Material snackbar: keep it inside a phone screen. */
+  .mat-mdc-snack-bar-container {
+    margin: 8px !important;
+    max-width: calc(100vw - 16px) !important;
+  }
+}
+
+/* ---------- utilities ---------- */
+
+/* Wrap a wide table (or any wide block) so it scrolls sideways inside its card instead of
+   widening the whole page. */
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .show-mobile {
+    display: none !important;
+  }
+}

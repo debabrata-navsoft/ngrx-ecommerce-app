@@ -31,3 +31,35 @@
   -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
   mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
 } */
+
+/* ---------- responsive ---------- */
+
+/* The banners are wide (3000x1200 and similar, ~2.1-2.5:1). A fixed 700px height with
+   object-fit: cover crops them to a vertical strip on narrow screens, so the height steps
+   down with the width. The home page pulls its deal cards up over the fade by a matching
+   amount (home-page.css) — change the two together. */
+@media (max-width: 1200px) {
+  .slider-container {
+    height: 520px;
+  }
+}
+
+@media (max-width: 992px) {
+  .slider-container {
+    height: 400px;
+  }
+}
+
+/* Phone: show the whole banner at its own proportions. Nothing overlaps it here, so the
+   bottom fade would only wash out the picture. */
+@media (max-width: 768px) {
+  .slider-container {
+    height: auto;
+    aspect-ratio: 12 / 5;
+  }
+
+  .slider-image {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}

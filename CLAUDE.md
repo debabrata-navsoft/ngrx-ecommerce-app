@@ -381,6 +381,18 @@ this is only how it got there.
 - All components are `standalone: true` with explicit `imports`. Dependencies use `inject()`, not constructor parameters.
 - Templates use the built-in control flow (`@if`, `@for`), not `*ngIf`/`*ngFor`.
 - Icons are **Lucide** (`lucide-angular`), not `mat-icon` — the Material Icons font is no longer loaded. Write `<lucide-icon name="chevron-right" />` and import `LucideAngularModule`. Every name must be registered in `shared/data/icons.data.ts` (`APP_ICONS`, picked once in `app.config.ts`); an unregistered name **throws at render time**, including during SSR. Lucide's `heart` is outline-only, so the wishlisted fill comes from `lucide-icon.active-wish > svg` in `styles.css` — rules that style the inner `<svg>` must be global, because it is created inside Lucide's component.
+- **Responsive design.** `frontend/src/styles/responsive.css` (pulled in by an `@import` at the
+  top of `styles.css`, not via `angular.json`) owns the breakpoints — **1200 / 992 / 768 / 480px,
+  max-width** — and the layout tokens `--page-gutter` (horizontal page margin: header,
+  breadcrumb, body and footer all align to it) and `--header-offset` (space under the fixed
+  customer header; 0 below 768px, where the header stops being fixed and scrolls away).
+  Use the tokens instead of hard-coding `5rem`/`9.5rem`. Component layout changes go in the
+  **component's own stylesheet** under a `/* ---------- responsive ---------- */` section,
+  because Angular's scoped selectors outrank anything global without `!important`. Two
+  recurring causes of phone overflow here: `width: 100%` plus padding with no
+  `box-sizing: border-box`, and a routed page whose host is inline (add `:host { display:
+  block; width: 100%; }`). Below 768px the category carousels are native swipe rows, and the
+  paging arrows are hidden, because 8-per-page paging only works while 8 cards fit.
 - Subscriptions are cleaned up with `inject(DestroyRef).onDestroy(() => sub.unsubscribe())` rather than `ngOnDestroy`.
 - TypeScript is `strict` with `noPropertyAccessFromIndexSignature`, so index-signature access is bracketed: `err.error?.['message']`. `strictTemplates` is on.
 - Shared helpers live under `shared/`: `shared/pipes/` (`truncate`, `time-ago`, `category-label`), `shared/directives/highlight.ts`, `shared/utils/rating.util.ts`. Category taxonomy is a static list in `shared/data/category.data.ts` — subcategory slugs there must match the `subCategory` values stored on product documents, since filtering compares them lowercased. There is no seed catalogue to cross-check against any more, so a new subcategory must be matched by hand against what is actually in the `products` collection.

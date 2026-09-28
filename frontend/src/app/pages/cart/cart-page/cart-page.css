@@ -138,6 +138,7 @@ select {
 
 .cart-right {
   width: 320px;
+  box-sizing: border-box;
   background: #fff;
   padding: 16px;
   height: fit-content;
@@ -238,4 +239,55 @@ button:hover {
 .original-price-mrp {
   font-size: 13px;
   margin: 0;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 992px) {
+  .cart-layout {
+    gap: 1.5rem;
+  }
+
+  .cart-right {
+    width: 280px;
+  }
+}
+
+/* Phone: one column, and the subtotal / Proceed to Buy box comes first — it is the action
+   a phone shopper needs, and at the bottom it sat under the whole Saved for Later list. */
+@media (max-width: 768px) {
+  .cart-layout {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .cart-right {
+    order: -1;
+    width: 100%;
+    position: static;
+  }
+
+  .cart-left h2 {
+    font-size: 22px;
+  }
+
+  .subtotal-price p {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* The 160px image column plus a 100px price column left ~60px for the title. The
+     per-line price is dropped here because the price box under the title already shows it. */
+  .cart-item {
+    gap: 12px;
+  }
+
+  .cart-image {
+    width: 96px;
+  }
+
+  .price {
+    display: none;
+  }
 }

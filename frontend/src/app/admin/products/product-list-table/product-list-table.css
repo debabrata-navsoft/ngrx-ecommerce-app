@@ -254,3 +254,17 @@
 .product-table td:nth-child(11) {
   text-align: center;
 } */
+/* ---------- responsive ---------- */
+
+/* `overflow: hidden` on the box clipped the Price and action columns off a phone, so
+   Edit/Delete could not be reached. Scroll the table sideways inside its card instead. */
+@media (max-width: 768px) {
+  .product-table-box {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .product-table {
+    min-width: 640px;
+  }
+}

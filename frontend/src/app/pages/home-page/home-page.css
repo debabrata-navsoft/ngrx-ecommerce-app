@@ -99,3 +99,31 @@
   background: white;
   padding: 1.5rem 1rem;
 }
+
+/* ---------- responsive ---------- */
+
+/* How far the deal cards ride up over the hero's faded bottom edge. Scales with the hero
+   height steps in hero.css (700 / 520 / 400px, then the banner's own ratio on phones). */
+@media (max-width: 1200px) {
+  .home-container {
+    margin-top: -220px;
+  }
+}
+
+@media (max-width: 992px) {
+  .home-container {
+    margin-top: -150px;
+  }
+}
+
+/* Phone: the header is no longer fixed and the banner is only ~150px tall, so neither the
+   -2rem pull under the header nor any card overlap applies. */
+@media (max-width: 768px) {
+  :host {
+    margin-top: 0;
+  }
+
+  .home-container {
+    margin-top: 0;
+  }
+}

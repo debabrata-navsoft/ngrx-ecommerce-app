@@ -153,3 +153,21 @@
   min-width: 100px;
   text-align: right;
 }
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 480px) {
+  /* The 160px image column plus a 100px price column left ~60px for the title. The
+     per-line price is dropped here because the price box under the title already shows it. */
+  .cart-item {
+    gap: 12px;
+  }
+
+  .cart-image {
+    width: 96px;
+  }
+
+  .price {
+    display: none;
+  }
+}

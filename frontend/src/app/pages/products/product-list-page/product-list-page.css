@@ -130,10 +130,14 @@
     border-color 0.25s ease;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  border-color: #e0e2e8;
-  box-shadow: 0 12px 28px rgba(16, 18, 23, 0.1);
+/* Hover effects only where a pointer really hovers: on a touchscreen :hover sticks to the
+   last card tapped, leaving it lifted above its neighbours. */
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: #e0e2e8;
+    box-shadow: 0 12px 28px rgba(16, 18, 23, 0.1);
+  }
 }
 
 .card:focus-within {
@@ -155,8 +159,10 @@
   transition: transform 0.45s ease;
 }
 
-.card:hover .product-img {
-  transform: scale(1.06);
+@media (hover: hover) {
+  .card:hover .product-img {
+    transform: scale(1.06);
+  }
 }
 
 .badge-discount {
@@ -194,9 +200,11 @@
     background 0.2s ease;
 }
 
-.fav-btn:hover {
-  transform: scale(1.1);
-  background: #fff;
+@media (hover: hover) {
+  .fav-btn:hover {
+    transform: scale(1.1);
+    background: #fff;
+  }
 }
 
 .fav-btn lucide-icon {
@@ -388,5 +396,19 @@
 
   .card:hover .product-img {
     transform: none;
+  }
+}
+
+/* Small phone: the page gutter already gives 12px each side; the extra 1rem left the two
+   product columns ~130px wide. */
+@media (max-width: 480px) {
+  .filters,
+  .product-list {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .product-list {
+    gap: 0.75rem;
   }
 }

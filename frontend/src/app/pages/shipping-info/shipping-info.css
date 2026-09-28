@@ -17,6 +17,7 @@
 
 .shipping-hero h1 {
   font-size: 2.5rem;
+  line-height: 1.2;
   margin-bottom: 0.8rem;
   color: #111827;
 }
@@ -42,8 +43,12 @@
   cursor: pointer;
 }
 
-.shipping-card:hover {
-  transform: translateY(-5px);
+/* Hover effects only where a pointer really hovers: on a touchscreen :hover sticks to the
+   last card tapped, leaving it lifted above its neighbours. */
+@media (hover: hover) {
+  .shipping-card:hover {
+    transform: translateY(-5px);
+  }
 }
 
 .shipping-card h2 {
@@ -73,4 +78,16 @@
 
 .shipping-banner h2 {
   margin-bottom: 0.5rem;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 480px) {
+  .shipping-hero h1 {
+    font-size: 1.9rem;
+  }
+
+  .shipping-hero p {
+    font-size: 1rem;
+  }
 }

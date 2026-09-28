@@ -148,3 +148,41 @@
   /* justify-content: center; */
   gap: 1rem;
 }
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 768px) {
+  .wishlist-title {
+    font-size: 22px;
+  }
+
+  .wishlist-container,
+  .wishlist-container-grid {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  /* Card stacks: image + details on top, the two buttons side by side underneath. */
+  .wishlist-card {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .actions {
+    flex-direction: row;
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist-container {
+    padding: 0.75rem 0;
+    background: transparent;
+  }
+
+  .img-box img {
+    width: 88px;
+    height: 88px;
+  }
+}

@@ -1,3 +1,6 @@
+/* Breakpoints, layout tokens (--page-gutter, --header-offset) and global mobile rules. */
+@import './styles/responsive.css';
+
 /* * {
   box-sizing: border-box;
 } */

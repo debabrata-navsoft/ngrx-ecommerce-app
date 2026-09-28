@@ -15,10 +15,6 @@ import { LucideAngularModule } from 'lucide-angular';
 
 export type SortDirection = 'asc' | 'desc';
 
-/**
- * How a cell renders when no `*appTableCell` template is supplied for the column.
- * `index` prints the running row number, `custom` means "a template will handle it".
- */
 export type TableColumnType =
   | 'text'
   | 'index'
@@ -29,20 +25,15 @@ export type TableColumnType =
   | 'custom';
 
 export interface TableColumn<T = any> {
-  /** Property on the row, or any unique id when `value` is supplied. */
   key: string;
   header: string;
-  /** Derives the cell value. Sorting and search read through it too. */
   value?: (row: T) => unknown;
   type?: TableColumnType;
-  /** `DatePipe` / `DecimalPipe` format string, depending on `type`. */
   format?: string;
   sortable?: boolean;
-  /** Defaults to true — set false to keep the column out of the search. */
   searchable?: boolean;
   align?: 'left' | 'center' | 'right';
   width?: string;
-  /** Drop the column on narrow screens. */
   hideBelow?: 'sm' | 'md' | 'lg';
   cellClass?: string;
 }
@@ -53,13 +44,6 @@ export interface TableCellContext<T = any> {
   index: number;
 }
 
-/**
- * Marks an `<ng-template>` as the renderer for one column:
- *
- * ```html
- * <ng-template appTableCell="status" let-order>…</ng-template>
- * ```
- */
 @Directive({
   selector: 'ng-template[appTableCell]',
   standalone: true,
@@ -89,10 +73,6 @@ function compare(a: unknown, b: unknown): number {
   return String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: 'base' });
 }
 
-/**
- * The one table every admin list uses: search, sorting, pagination, loading skeletons and
- * an empty state, with per-column `*appTableCell` templates for anything bespoke.
- */
 @Component({
   selector: 'app-data-table',
   standalone: true,
@@ -129,7 +109,6 @@ export class DataTable<T> {
 
   readonly dense = input(false);
   readonly clickableRows = input(false);
-  /** Overrides the default row identity (`id` / `uid` / `orderId`, else the index). */
   readonly trackBy = input<(row: T, index: number) => unknown>();
 
   readonly rowClick = output<T>();

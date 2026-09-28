@@ -4,7 +4,7 @@ import {
   isMainModule,
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import { join } from 'node:path';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
@@ -12,45 +12,21 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
-// const win = domino.createWindow(template);
-// global['window'] = win;
-// global['document'] = win.document;
-// global['navigator'] = win.navigator;
-// global['localStorage'] = localStorage;
-// global['getComputedStyle'] = win.getComputedStyle;
-// global['IDBIndex'] = win.IDBIndex;
+const HASHED_ASSET = /-[A-Z0-9]{8}\.[a-z0-9]+$/;
 
-/**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/{*splat}', (req, res) => {
- *   // Handle API request
- * });
- * ```
- */
-
-/**
- * Serve static files from /browser
- */
 app.use(
   express.static(browserDistFolder, {
-    maxAge: '1y',
     index: false,
     redirect: false,
+    setHeaders: (res, filePath) => {
+      res.setHeader(
+        'Cache-Control',
+        HASHED_ASSET.test(filePath) ? 'public, max-age=31536000, immutable' : 'no-cache',
+      );
+    },
   }),
 );
 
-/**
- * Handle all other requests by rendering the Angular application.
- *
- * The render is session-aware: ApiService forwards the incoming `Cookie` to the API, so
- * the HTML reflects who is signed in and Angular's transfer cache embeds that user in the
- * page. That makes each response **user-specific**, so it must never be stored by a
- * shared cache — a CDN or proxy hit would serve one visitor's account to another.
- */
 app.use((req, res, next) => {
   res.setHeader('Cache-Control', 'no-store, private');
   res.setHeader('Vary', 'Cookie');
@@ -61,10 +37,12 @@ app.use((req, res, next) => {
     .catch(next);
 });
 
-/**
- * Start the server if this module is the main entry point, or it is ran via PM2.
- * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
- */
+app.use((err: unknown, _req: Request, res: Response, next: NextFunction) => {
+  console.error('SSR render failed:', err);
+  if (res.headersSent) return next(err);
+  res.status(500).type('text/plain').send('Something went wrong. Please try again.');
+});
+
 if (isMainModule(import.meta.url) || process.env['pm_id']) {
   const port = process.env['PORT'] || 4000;
   app.listen(port, (error) => {
@@ -76,8 +54,4 @@ if (isMainModule(import.meta.url) || process.env['pm_id']) {
   });
 }
 
-/**
- * Request handler used by the Angular CLI, for the dev-server and during the build.
- * Required — `ng serve` looks for this export.
- */
 export const reqHandler = createNodeRequestHandler(app);

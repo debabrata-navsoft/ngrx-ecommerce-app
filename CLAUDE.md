@@ -131,7 +131,7 @@ signed-in user to `/login`. It reproduces the guarantee `authState` used to prov
 - `frontend/src/main.ts` (browser) and `frontend/src/main.server.ts` (server) both bootstrap `App` from `frontend/src/app/app.ts`.
 - `frontend/src/app/app.config.ts` is the shared provider set (router, hydration with event replay, HttpClient with fetch). `app.config.server.ts` merges server rendering on top.
 - `frontend/src/app/app.routes.server.ts` renders the customer area with `RenderMode.Server` (`path: '**'`), and **`admin/**` with `RenderMode.Client`**. The admin entry must stay above the `**` one. It is client-only because `adminAuthGuard` returns `of(true)` on the server, so SSR rendered the dashboard for anonymous visitors and its `ngOnInit` called `/api/users` and `/api/orders/all` with no cookie — two 401s logged into the server console on every hit. A private dashboard gains nothing from SSR. Other commented-out blocks in that file show an intended per-route prerender split — treat those as unimplemented ideas, not active config.
-- `frontend/src/server.ts` serves `dist/.../browser` statically and delegates everything else to `AngularNodeAppEngine`. It also exports `reqHandler` for Firebase Cloud Functions (a leftover — nothing deploys there now).
+- `frontend/src/server.ts` serves `dist/.../browser` statically and delegates everything else to `AngularNodeAppEngine`. It exports `reqHandler`, which **must stay**: `ng serve` and `ng build` load the server through that export. A final error handler logs a failed render and sends a plain 500, so Express's default handler never shows a visitor the stack trace.
 - **`security.allowedHosts` in `frontend/angular.json` gates SSR.** It currently lists `localhost` and `127.0.0.1`. The list is baked into `dist/.../server/angular-app-engine-manifest.mjs` at build time. Any `Host`/`X-Forwarded-Host` not on it gets a **400** — note that an *empty* list is not "allow all", it rejects everything and silently degrades to client-side rendering. Add a new deployment domain either there (requires rebuild) or via the `NG_ALLOWED_HOSTS` env var, which is comma-separated and merges with the baked list at runtime. `*.example.com` matches subdomains only, never the apex; `"*"` allows everything and logs a startup warning.
 
 Because every route renders on the server, browser-only code still needs guarding — but
@@ -408,7 +408,7 @@ this is only how it got there.
 - The SSR HTML is **user-specific**: it reflects the visitor's session and the transfer
   cache embeds their user object. `frontend/src/server.ts` sets `Cache-Control: no-store, private`
   and `Vary: Cookie` on it for that reason — a shared cache would serve one visitor's
-  account to another. Static assets under `/browser` keep their 1-year cache.
+  account to another. Under `/browser`, only content-hashed build output (`main-XXXXXXXX.js`, `chunk-…`, `styles-…`, matched by `HASHED_ASSET`) gets `max-age=1y, immutable`; files from `public/` keep their names across deploys, so they are `no-cache` (revalidated, 304 when unchanged) — a year-long cache would pin a replaced banner or avatar.
 - `backend/.env` is gitignored and is the file the server loads; `backend/.env.example` is the committed template. **Never put real credentials in `.env.example`.**
 - `backend/config/env.js` resolves `.env` from the package root via `import.meta.url`, not `process.cwd()`, so scripts work from any directory. Do not switch it back to `import 'dotenv/config'`.
 - `JWT_SECRET` is required — the API refuses to boot without it. A short or guessable value lets anyone mint a `role=admin` token.
@@ -419,7 +419,6 @@ this is only how it got there.
 - `frontend/src/environments/environment.ts` and `environment.prod.ts` differ (`apiUrl`), but `frontend/angular.json` defines no `fileReplacements`, so the prod file is **never used** — `environment.ts` is what ships. Add a `fileReplacements` entry before relying on it. (Its comments still say the API lives in `server/`; the directory is `backend/`.)
 - `CORS_ORIGINS` must list the Angular origin: credentialed requests cannot use a wildcard. Requests with no `Origin` (the SSR server, curl) are allowed on purpose.
 - `frontend/Dockerfile` CMD still says `dist/<your-app-name>/server/server.mjs`; the real path is `dist/ecommerce-ssr/server/server.mjs`. It also does not build or run `backend/`. The image will not start as written.
-- `frontend/src/server.ts` still exports `reqHandler` for Cloud Functions — a leftover from the Firebase backend. (`firebase.json` is already gone.)
 - Several files carry large commented-out earlier revisions (`app.routes.server.ts`, `product-list-page.ts`, `payment-page.ts` predecessors). Read past them; do not treat them as reference implementations.
 - Two unrelated components are both named `TodayDeals` (`shared/components/categories/today-deals/` and `pages/sidebar/today-deals/`). Check the import path.
 - Addresses are keyed by **id**, not array index. The old code replaced the whole `addresses` array, which dropped any address added in another tab between read and write.

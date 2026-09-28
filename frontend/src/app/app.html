@@ -1,0 +1,7 @@
+@if (loaderService.isBusy() || loaderService.isLoading()) {
+  <div class="global-loader" role="status" aria-live="polite" aria-label="Loading">
+    <app-loader />
+  </div>
+}
+
+<router-outlet></router-outlet>

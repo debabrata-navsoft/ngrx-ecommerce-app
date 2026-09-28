@@ -1,0 +1,101 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <h1>Welcome Back</h1>
+    <p>Login to access to your account</p>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <label for="email">Email</label>
+      <div class="input-box">
+        <mat-icon class="material-icons-outlined">email</mat-icon>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          placeholder="Enter your email"
+          [formControl]="form.controls.email"
+        />
+      </div>
+
+      <div class="error">
+        @if (email.errors?.['required'] && email.touched) {
+          <p class="error-line">Email is required.</p>
+        }
+
+        @if (email.errors?.['email'] && email.touched) {
+          <p class="error-line">Enter a valid email.</p>
+        }
+
+        <!-- e.g. "This email is not registered. Please sign up first." -->
+        @if (email.errors?.['server']) {
+          <p class="error-line">{{ email.errors?.['server'] }}</p>
+        }
+      </div>
+
+      <label for="password">Password</label>
+      <div class="input-box">
+        <mat-icon class="material-icons-outlined">lock</mat-icon>
+        <input
+          id="password"
+          name="password"
+          [type]="showPassword() ? 'text' : 'password'"
+          autocomplete="current-password"
+          placeholder="Enter your password"
+          formControlName="password"
+        />
+        <button
+          type="button"
+          class="toggle-password"
+          (click)="togglePassword()"
+          [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+          [attr.aria-pressed]="showPassword()"
+        >
+          <mat-icon class="material-icons-outlined">
+            {{ showPassword() ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+        </button>
+      </div>
+
+      <div class="error">
+        @if (password.errors?.['required'] && password.touched) {
+          <p class="error-line">Password required</p>
+        }
+
+        @if (password.errors?.['minlength'] && password.touched) {
+          <p class="error-line">Minimum 6 characters</p>
+        }
+
+        <!-- e.g. "Incorrect password. Please try again." -->
+        @if (password.errors?.['server']) {
+          <p class="error-line">{{ password.errors?.['server'] }}</p>
+        }
+      </div>
+
+      <div class="forgot-link">
+        <a routerLink="/forgot-password">Forgot password?</a>
+      </div>
+
+      <!-- Failures that belong to no single field: an admin account used on the customer
+           login, or the server being unreachable. Field-specific ones print above. -->
+      @if (serverError()) {
+        <div class="server-error">
+          <mat-icon class="material-icons-outlined">error_outline</mat-icon>
+          <p class="error-line">{{ serverError() }}</p>
+        </div>
+      }
+
+      <button type="submit" class="login-btn">
+        @if (isLoading()) {
+          <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+        } @else {
+          Login
+        }
+      </button>
+    </form>
+
+    <div class="signup-link">
+      Don't have an account?
+      <a routerLink="/signup">Sign Up</a>
+    </div>
+  </div>
+</div>

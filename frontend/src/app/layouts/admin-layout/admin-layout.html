@@ -1,0 +1,17 @@
+<div class="shell" [class.shell--drawer-open]="drawerOpen()">
+  <app-admin-sidebar [collapsed]="collapsed()" (navigated)="closeDrawer()" />
+
+  <div class="shell__backdrop" (click)="closeDrawer()"></div>
+
+  <div class="shell__main">
+    <app-admin-header
+      [collapsed]="collapsed()"
+      (toggleCollapse)="toggleCollapse()"
+      (toggleDrawer)="toggleDrawer()"
+    />
+
+    <main class="shell__content">
+      <router-outlet />
+    </main>
+  </div>
+</div>

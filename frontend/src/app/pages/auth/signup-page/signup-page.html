@@ -1,0 +1,214 @@
+<div class="signup-wrapper">
+  <div class="signup-card">
+    <h1>Create Account</h1>
+    <p>Signup to create your account</p>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="name">
+        <div>
+          <label for="firstName">First Name</label>
+          <div class="input-box">
+            <mat-icon class="material-icons-outlined icon">person</mat-icon>
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              autocomplete="name"
+              placeholder="Enter your name"
+              formControlName="firstName"
+            />
+          </div>
+
+          <div class="error">
+            @if (firstName.errors?.['required'] && firstName.touched) {
+              <p class="error-line">First name is required</p>
+            }
+
+            @if (firstName.errors?.['server']) {
+              <p class="error-line">{{ firstName.errors?.['server'] }}</p>
+            }
+          </div>
+        </div>
+        <div>
+          <label for="lastName">Last Name</label>
+          <div class="input-box">
+            <mat-icon class="material-icons-outlined icon">person</mat-icon>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              autocomplete="name"
+              placeholder="Enter your name"
+              formControlName="lastName"
+            />
+          </div>
+          <div class="error">
+            @if (lastName.errors?.['required'] && lastName.touched) {
+              <p class="error-line">Last name is required</p>
+            }
+
+            @if (lastName.errors?.['server']) {
+              <p class="error-line">{{ lastName.errors?.['server'] }}</p>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="email">
+        <label for="email">Email</label>
+        <div class="input-box">
+          <mat-icon class="material-icons-outlined icon">email</mat-icon>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="Enter your email"
+            formControlName="email"
+          />
+        </div>
+
+        <div class="error">
+          @if (email.errors?.['required'] && email.touched) {
+            <p class="error-line">Email is required</p>
+          }
+          @if (email.errors?.['email'] && email.touched) {
+            <p class="error-line">Enter valid email</p>
+          }
+
+          <!-- e.g. "This email is already registered. Try logging in instead." -->
+          @if (email.errors?.['server']) {
+            <p class="error-line">{{ email.errors?.['server'] }}</p>
+          }
+        </div>
+      </div>
+
+      <div class="password">
+        <div>
+          <label for="password">Password</label>
+          <div class="input-box">
+            <mat-icon class="material-icons-outlined icon">lock</mat-icon>
+            <input
+              id="password"
+              name="password"
+              [type]="showPassword() ? 'text' : 'password'"
+              autocomplete="new-password"
+              placeholder="Enter your password"
+              formControlName="password"
+            />
+            <button
+              type="button"
+              class="toggle-password"
+              (click)="togglePassword()"
+              [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+              [attr.aria-pressed]="showPassword()"
+            >
+              <mat-icon class="material-icons-outlined">
+                {{ showPassword() ? 'visibility_off' : 'visibility' }}
+              </mat-icon>
+            </button>
+          </div>
+          <div class="error">
+            @if (password.errors?.['required'] && password.touched) {
+              <p class="error-line">Password required</p>
+            }
+
+            @if (password.errors?.['minlength'] && password.touched) {
+              <p class="error-line">Minimum 8 characters</p>
+            }
+
+            @if (password.errors?.['server']) {
+              <p class="error-line">{{ password.errors?.['server'] }}</p>
+            }
+          </div>
+        </div>
+
+        <div>
+          <label for="confirm-password">Confirm Password</label>
+          <div class="input-box">
+            <mat-icon class="material-icons-outlined icon">lock</mat-icon>
+            <input
+              id="confirm-password"
+              name="confirm-password"
+              [type]="showConfirmPassword() ? 'text' : 'password'"
+              autocomplete="new-password"
+              placeholder="Enter your password"
+              formControlName="confirmPassword"
+            />
+            <button
+              type="button"
+              class="toggle-password"
+              (click)="toggleConfirmPassword()"
+              [attr.aria-label]="showConfirmPassword() ? 'Hide password' : 'Show password'"
+              [attr.aria-pressed]="showConfirmPassword()"
+            >
+              <mat-icon class="material-icons-outlined">
+                {{ showConfirmPassword() ? 'visibility_off' : 'visibility' }}
+              </mat-icon>
+            </button>
+          </div>
+          <div class="error">
+            <div class="error">
+              @if (confirmPassword.errors?.['required'] && confirmPassword.touched) {
+                <p class="error-line">Confirm password required</p>
+              }
+
+              @if (form.errors?.['passwordMismatch'] && confirmPassword.touched) {
+                <p class="error-line">Passwords do not match</p>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label for="phone">Phone Number</label>
+        <div class="phone-header">
+          <div formArrayName="phoneNumber" class="phone">
+            @for (phone of phoneNumber.controls; track $index; let i = $index) {
+              <div class="phone-row">
+                <div class="input-box">
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    autocomplete="tel"
+                    [formControlName]="i"
+                    placeholder="Phone number"
+                  />
+                  <button (click)="removePhone(i)" class="remove">
+                    <mat-icon class="material-icons-outlined">delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+          <div class="phone-btn">
+            <button (click)="addPhone()" type="button" class="add">Add Phone</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Failures that belong to no single field. Field-specific ones print above. -->
+      @if (serverError()) {
+        <div class="server-error">
+          <mat-icon class="material-icons-outlined">error_outline</mat-icon>
+          <p class="error-line">{{ serverError() }}</p>
+        </div>
+      }
+
+      <button type="submit" class="login-btn submit-button">
+        @if (isLoading()) {
+          <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+        } @else {
+          Sign Up
+        }
+      </button>
+    </form>
+
+    <div class="login-link">
+      I have an account?
+      <a routerLink="/login">Login</a>
+    </div>
+  </div>
+</div>

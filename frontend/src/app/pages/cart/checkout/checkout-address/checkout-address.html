@@ -1,0 +1,63 @@
+@if (userData()?.addresses?.length) {
+  <div class="address-list">
+    @for (item of visibleAddresses(); track item.index) {
+      <label
+        class="address-card"
+        [class.selected]="selectedIndex() === item.index"
+        (click)="selectAddress(item.addr, item.index)"
+      >
+        <input
+          type="radio"
+          name="selectedAddress"
+          [value]="item.index"
+          [checked]="selectedIndex() === item.index"
+        />
+
+        <div class="address-details">
+          <h4>{{ item.addr.fullName }}</h4>
+          <p>
+            {{ item.addr.address }}, {{ item.addr.city }}, {{ item.addr.state }} -
+            {{ item.addr.pinCode }}
+          </p>
+          <p>Landmark: {{ item.addr.landmark }}</p>
+          <small>Phone number: {{ item.addr.phone }}</small>
+        </div>
+
+        <div (click)="$event.stopPropagation()">
+          <button
+            type="button"
+            (click)="$event.stopPropagation(); editAddress(item.addr, item.index)"
+            class="edit-btn"
+          >
+            Edit address
+          </button>
+        </div>
+      </label>
+    }
+  </div>
+
+  @if (!selectedAddress()) {
+    <p class="select-worning">Please select a delivery address to continue.</p>
+  }
+} @else {
+  <p>No saved address</p>
+}
+
+<div class="see-more-add-new">
+  @if ((userData()?.addresses?.length || 0) > 2) {
+    <button type="button" class="toggle-btn" (click)="toggleShowAll()">
+      {{ showAll() ? 'Show less addresses' : 'Show more addresses' }}
+    </button>
+  }
+
+  <button type="button" (click)="openPopup()" class="add-new">Add New Address</button>
+</div>
+
+<app-address-form
+  [open]="showAddressPopup()"
+  [value]="newAddress()"
+  [editing]="editingIndex() !== null"
+  (save)="saveAddress($event)"
+  (closed)="showAddressPopup.set(false)"
+/>
+

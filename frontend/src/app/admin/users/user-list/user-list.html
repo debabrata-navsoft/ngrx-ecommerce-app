@@ -1,0 +1,78 @@
+<div class="adm-page">
+  <div class="adm-page__head">
+    <div>
+      <h1 class="adm-page__title">Customers</h1>
+      <p class="adm-page__sub">
+        {{ users().length }} accounts · {{ adminCount() }} with admin access
+      </p>
+    </div>
+  </div>
+
+  <app-data-table
+    [columns]="columns"
+    [rows]="visibleUsers()"
+    [loading]="loading()"
+    title="All customers"
+    searchPlaceholder="Search name, email, phone…"
+    emptyMessage="No customers yet"
+    emptyIcon="group"
+    sortKey="index"
+    sortDirection="desc"
+    [pageSize]="10"
+  >
+    <label tableFilters class="filter">
+      <span>Role</span>
+      <select
+        class="adm-select"
+        [value]="roleFilter()"
+        (change)="setRoleFilter($any($event.target).value)"
+      >
+        <option value="all">All</option>
+        <option value="user">Customers</option>
+        <option value="admin">Admins</option>
+      </select>
+    </label>
+
+    <ng-template appTableCell="customer" let-user>
+      <a class="customer" [routerLink]="['/admin/users', user.uid]">
+        <span class="adm-avatar">
+          @if (user.avatarUrl) {
+            <img [src]="user.avatarUrl" alt="" />
+          } @else {
+            {{ initials(user) }}
+          }
+        </span>
+        <span class="customer__text">
+          <strong>{{ fullName(user) }}</strong>
+          <small>{{ user.email }}</small>
+        </span>
+      </a>
+    </ng-template>
+
+    <ng-template appTableCell="phoneNumber" let-user>
+      {{ user.phoneNumber?.[0] || '—' }}
+    </ng-template>
+
+    <ng-template appTableCell="role" let-user>
+      <span class="adm-badge" [class.adm-badge--primary]="user.role === 'admin'">
+        {{ user.role === 'admin' ? 'Admin' : 'Customer' }}
+      </span>
+    </ng-template>
+
+    <ng-template appTableCell="actions" let-user>
+      <div class="row-actions">
+        <a class="adm-icon-btn" [routerLink]="['/admin/users', user.uid]" title="View customer">
+          <mat-icon class="material-icons-outlined">visibility</mat-icon>
+        </a>
+        <button
+          type="button"
+          class="adm-icon-btn adm-icon-btn--danger"
+          title="Delete customer"
+          (click)="deleteUser(user)"
+        >
+          <mat-icon class="material-icons-outlined">delete</mat-icon>
+        </button>
+      </div>
+    </ng-template>
+  </app-data-table>
+</div>

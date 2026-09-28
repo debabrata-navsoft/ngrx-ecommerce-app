@@ -1,0 +1,91 @@
+import { inject, Injectable } from '@angular/core';
+import { map, Observable, tap } from 'rxjs';
+
+import { ApiService, fireAndShare } from './api.service';
+import { SessionService } from './session.service';
+import { User } from '../../shared/models/user.model';
+
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  private api = inject(ApiService);
+  private session = inject(SessionService);
+
+  readonly currentUser$: Observable<User | null> = this.session.user$;
+
+  readonly currentUser = this.session.user;
+  readonly isAuthReady = this.session.isReady;
+
+  signupUser(data: User, password: string): Observable<User> {
+    return this.api
+      .post<{ user: User }>('/auth/signup', {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phoneNumber: data.phoneNumber ?? [],
+        password,
+      })
+      .pipe(
+        map((res) => res.user),
+        tap((user) => {
+          this.session.settle(user);
+          this.setSessionRole('user');
+        }),
+      );
+  }
+
+  login(email: string, password: string): Observable<User> {
+    return this.api.post<{ user: User }>('/auth/login', { email, password }).pipe(
+      map((res) => res.user),
+      tap((user) => {
+        this.session.settle(user);
+        this.setSessionRole('user');
+      }),
+    );
+  }
+
+  logout(): Observable<void> {
+    return fireAndShare(
+      this.api.post<void>('/auth/logout').pipe(
+        tap(() => {
+          this.clearSessionRole();
+          this.session.clear();
+        }),
+      ),
+    );
+  }
+
+  isLoggedIn(): boolean {
+    return this.isAuthReady() && !!this.currentUser();
+  }
+
+  getFullUser(): Observable<User | null> {
+    return this.currentUser$;
+  }
+
+  updateUserDetails(changes: Partial<User>): Observable<void> {
+    return this.api.patch<{ user: User }>('/auth/me', changes).pipe(
+      tap((res) => this.session.settle(res.user)),
+      map(() => void 0),
+    );
+  }
+
+  changePassword(currentPassword: string, newPassword: string): Observable<void> {
+    return this.api.post<void>('/auth/change-password', { currentPassword, newPassword });
+  }
+
+  forgotPassword(email: string): Observable<void> {
+    return this.api.post<void>('/auth/forgot-password', { email });
+  }
+
+  resetPassword(token: string, password: string): Observable<void> {
+    return this.api.post<void>('/auth/reset-password', { token, password });
+  }
+
+  private setSessionRole(role: 'user' | 'admin'): void {
+    if (this.api.isBrowser) localStorage.setItem('session_role', role);
+  }
+
+  private clearSessionRole(): void {
+    if (this.api.isBrowser) localStorage.removeItem('session_role');
+  }
+}

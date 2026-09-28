@@ -1,0 +1,36 @@
+<h2>Address Book</h2>
+
+<button (click)="openAddressPopup()">Add New Address</button>
+
+@if (addresses().length) {
+  @for (addr of addresses(); track addr.id ?? $index; let i = $index) {
+    <div class="card-box">
+      <p>
+        <strong>{{ addr.fullName }}</strong>
+      </p>
+      <p>{{ addr.address }}, {{ addr.city }}, {{ addr.state }} - {{ addr.pinCode }}</p>
+
+      <p><strong>Landmark</strong>: {{ addr.landmark }}</p>
+      <p>{{ addr.phone }}</p>
+
+      <div class="card-btn">
+        <button (click)="editAddress(i)">Edit</button>
+        <button (click)="deleteAddress(i)">Delete</button>
+      </div>
+    </div>
+  }
+} @else {
+  <div class="card-box">
+    <p>No saved address yet.</p>
+  </div>
+}
+
+
+<app-address-form
+  [open]="showAddressPopup()"
+  [value]="newAddress()"
+  [editing]="editAddressIndex() !== null"
+  [saving]="saving()"
+  (save)="saveAddress($event)"
+  (closed)="showAddressPopup.set(false)"
+/>

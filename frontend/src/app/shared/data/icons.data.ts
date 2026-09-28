@@ -53,11 +53,6 @@ import {
   Zap,
 } from 'lucide-angular';
 
-/**
- * Every Lucide icon the app renders, registered once in app.config.ts. Templates refer to
- * them by kebab-case name (`<lucide-icon name="chevron-right" />`), so an icon missing from
- * this list throws at render time — add it here when you use a new one.
- */
 export const APP_ICONS = {
   ArrowLeft,
   ArrowDown,

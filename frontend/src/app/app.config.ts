@@ -1,5 +1,6 @@
 import {
   ApplicationConfig,
+  importProvidersFrom,
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
 } from '@angular/core';
@@ -9,6 +10,9 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 
 import { routes } from './app.routes';
 import { loadingInterceptor } from './core/loading.interceptor';
+import { provideAppStore } from './core/store';
+import { LucideAngularModule } from 'lucide-angular';
+import { APP_ICONS } from './shared/data/icons.data';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,5 +32,12 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch(), withInterceptors([loadingInterceptor])),
 
     provideClientHydration(withEventReplay()),
+
+    // NgRx holds the session, cart, wishlist and saved-later state; the services in
+    // core/services are facades over it. See core/store/.
+    ...provideAppStore(),
+
+    // Lucide icons, looked up by name from <lucide-icon name="..." />. See shared/data/icons.data.ts.
+    importProvidersFrom(LucideAngularModule.pick(APP_ICONS)),
   ],
 };

@@ -11,7 +11,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 
 import { ProductService } from '../../../core/services/product.service';
 import { Product } from '../../../shared/models/product.model';
@@ -27,7 +27,7 @@ import { CategoryLabelPipe } from '../../../shared/pipes/category-label.pipe';
 @Component({
   selector: 'app-product-list-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, Error, MatIcon, CategoryLabelPipe],
+  imports: [CommonModule, FormsModule, Error, LucideAngularModule, CategoryLabelPipe],
   templateUrl: './product-list-page.html',
   styleUrl: './product-list-page.css',
 })
@@ -227,7 +227,7 @@ export class ProductListPage implements OnInit {
 // @Component({
 //   selector: 'app-product-list-page',
 //   standalone: true,
-//   imports: [CommonModule, FormsModule, TruncatePipe, Highlight, Error, MatIcon],
+//   imports: [CommonModule, FormsModule, TruncatePipe, Highlight, Error, LucideAngularModule],
 //   templateUrl: './product-list-page.html',
 //   styleUrl: './product-list-page.css',
 // })

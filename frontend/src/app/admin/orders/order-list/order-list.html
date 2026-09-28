@@ -22,7 +22,7 @@
     title="All orders"
     searchPlaceholder="Search order id or customer…"
     emptyMessage="No orders in this view"
-    emptyIcon="receipt_long"
+    emptyIcon="receipt-text"
     sortKey="index"
     sortDirection="desc"
     [pageSize]="10"
@@ -78,7 +78,7 @@
         [routerLink]="['/admin/orders', order.orderId]"
         [queryParams]="{ userId: order.userId }"
       >
-        <mat-icon class="material-icons-outlined">open_in_new</mat-icon>
+        <lucide-icon name="external-link" />
       </a>
     </ng-template>
   </app-data-table>

@@ -8,7 +8,7 @@
         <div>
           <label for="firstName">First Name</label>
           <div class="input-box">
-            <mat-icon class="material-icons-outlined icon">person</mat-icon>
+            <lucide-icon class="icon" name="user" />
             <input
               id="firstName"
               name="firstName"
@@ -32,7 +32,7 @@
         <div>
           <label for="lastName">Last Name</label>
           <div class="input-box">
-            <mat-icon class="material-icons-outlined icon">person</mat-icon>
+            <lucide-icon class="icon" name="user" />
             <input
               id="lastName"
               name="lastName"
@@ -57,7 +57,7 @@
       <div class="email">
         <label for="email">Email</label>
         <div class="input-box">
-          <mat-icon class="material-icons-outlined icon">email</mat-icon>
+          <lucide-icon class="icon" name="mail" />
           <input
             id="email"
             name="email"
@@ -87,7 +87,7 @@
         <div>
           <label for="password">Password</label>
           <div class="input-box">
-            <mat-icon class="material-icons-outlined icon">lock</mat-icon>
+            <lucide-icon class="icon" name="lock" />
             <input
               id="password"
               name="password"
@@ -103,9 +103,7 @@
               [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
               [attr.aria-pressed]="showPassword()"
             >
-              <mat-icon class="material-icons-outlined">
-                {{ showPassword() ? 'visibility_off' : 'visibility' }}
-              </mat-icon>
+              <lucide-icon [name]="showPassword() ? 'eye-off' : 'eye'" />
             </button>
           </div>
           <div class="error">
@@ -126,7 +124,7 @@
         <div>
           <label for="confirm-password">Confirm Password</label>
           <div class="input-box">
-            <mat-icon class="material-icons-outlined icon">lock</mat-icon>
+            <lucide-icon class="icon" name="lock" />
             <input
               id="confirm-password"
               name="confirm-password"
@@ -142,9 +140,7 @@
               [attr.aria-label]="showConfirmPassword() ? 'Hide password' : 'Show password'"
               [attr.aria-pressed]="showConfirmPassword()"
             >
-              <mat-icon class="material-icons-outlined">
-                {{ showConfirmPassword() ? 'visibility_off' : 'visibility' }}
-              </mat-icon>
+              <lucide-icon [name]="showConfirmPassword() ? 'eye-off' : 'eye'" />
             </button>
           </div>
           <div class="error">
@@ -177,7 +173,7 @@
                     placeholder="Phone number"
                   />
                   <button (click)="removePhone(i)" class="remove">
-                    <mat-icon class="material-icons-outlined">delete</mat-icon>
+                    <lucide-icon name="trash-2" />
                   </button>
                 </div>
               </div>
@@ -192,7 +188,7 @@
       <!-- Failures that belong to no single field. Field-specific ones print above. -->
       @if (serverError()) {
         <div class="server-error">
-          <mat-icon class="material-icons-outlined">error_outline</mat-icon>
+          <lucide-icon name="circle-alert" />
           <p class="error-line">{{ serverError() }}</p>
         </div>
       }

@@ -1,6 +1,6 @@
 <div class="slider-wrapper">
   <button class="nav prev" (click)="prev()" [disabled]="currentIndex() === 0">
-    <mat-icon class="material-icons-outlined">chevron_left</mat-icon>
+    <lucide-icon name="chevron-left" />
   </button>
 
   <div class="slider-viewport">
@@ -21,13 +21,13 @@
     (click)="next()"
     [disabled]="currentIndex() + pageSize() >= fullProducts().length"
   >
-    <mat-icon class="material-icons-outlined">chevron_right</mat-icon>
+    <lucide-icon name="chevron-right" />
   </button>
 </div>
 
 <!-- <div class="slider-wrapper">
   <button class="nav prev" (click)="prev()" [disabled]="currentIndex() === 0">
-    <mat-icon>chevron_left</mat-icon>
+    <lucide-icon name="chevron-left" />
   </button>
 
   <div class="slider-viewport">
@@ -48,14 +48,14 @@
     (click)="next()"
     [disabled]="currentIndex() + pageSize >= limitedProducts().length"
   >
-    <mat-icon>chevron_right</mat-icon>
+    <lucide-icon name="chevron-right" />
   </button>
 </div> -->
 
 <!-- <div class="slider-wrapper">
 
   <button class="nav prev" (click)="prev()" [disabled]="currentIndex() === 0">
-    <mat-icon>chevron_left</mat-icon>
+    <lucide-icon name="chevron-left" />
   </button>
 
 
@@ -69,6 +69,6 @@
 
 
   <button class="nav next" (click)="next()" [disabled]="currentIndex() + pageSize >= totalLimit">
-    <mat-icon>chevron_right</mat-icon>
+    <lucide-icon name="chevron-right" />
   </button>
 </div> -->

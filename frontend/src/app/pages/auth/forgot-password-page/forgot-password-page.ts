@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
 
@@ -12,7 +12,7 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
 @Component({
   selector: 'app-forgot-password-page',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, MatIconModule, MatProgressSpinnerModule],
+  imports: [RouterLink, ReactiveFormsModule, LucideAngularModule, MatProgressSpinnerModule],
   templateUrl: './forgot-password-page.html',
   styleUrl: './forgot-password-page.css',
 })

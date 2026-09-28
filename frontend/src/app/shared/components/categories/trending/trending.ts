@@ -9,7 +9,7 @@ import {
   signal,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 
 import { ProductService } from '../../../../core/services/product.service';
 import { Product } from '../../../models/product.model';
@@ -17,7 +17,7 @@ import { Product } from '../../../models/product.model';
 @Component({
   selector: 'app-trending',
   standalone: true,
-  imports: [MatIconModule],
+  imports: [LucideAngularModule],
   templateUrl: './trending.html',
   styleUrl: './trending.css',
 })

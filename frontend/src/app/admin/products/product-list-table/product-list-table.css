@@ -177,7 +177,7 @@
   background: #d32f2f;
 }
 
-.product-body-btn mat-icon {
+.product-body-btn lucide-icon {
   font-size: 24px;
 }
 
@@ -223,7 +223,7 @@
   user-select: none;
 }
 
-.id-arrow mat-icon {
+.id-arrow lucide-icon {
   font-size: 16px;
   vertical-align: middle;
   margin-top: 8px;

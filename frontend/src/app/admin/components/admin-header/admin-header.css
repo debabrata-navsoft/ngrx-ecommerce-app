@@ -47,7 +47,7 @@
   color: var(--adm-primary, #4f46e5);
 }
 
-.hdr__toggle mat-icon {
+.hdr__toggle lucide-icon {
   font-size: 20px;
   width: 20px;
   height: 20px;
@@ -105,7 +105,7 @@
   border-color: var(--adm-border-strong, #d6dae4);
 }
 
-.hdr__store mat-icon {
+.hdr__store lucide-icon {
   font-size: 17px;
   width: 17px;
   height: 17px;
@@ -225,7 +225,7 @@
   cursor: pointer;
 }
 
-.hdr__menu-item mat-icon {
+.hdr__menu-item lucide-icon {
   font-size: 18px;
   width: 18px;
   height: 18px;
@@ -241,7 +241,7 @@
   color: var(--adm-danger, #d92d20);
 }
 
-.hdr__menu-item--danger mat-icon {
+.hdr__menu-item--danger lucide-icon {
   color: var(--adm-danger, #d92d20);
 }
 

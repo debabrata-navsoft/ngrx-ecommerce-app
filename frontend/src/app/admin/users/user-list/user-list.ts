@@ -1,6 +1,6 @@
 import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 
 import { UserService } from '../../../core/services/user.service';
 import { SnackbarService } from '../../../core/services/snackbar.service';
@@ -12,7 +12,7 @@ type RoleFilter = 'all' | 'user' | 'admin';
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [RouterLink, MatIcon, DataTable, TableCellDef],
+  imports: [RouterLink, LucideAngularModule, DataTable, TableCellDef],
   templateUrl: './user-list.html',
   styleUrl: './user-list.css',
 })

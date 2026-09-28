@@ -11,7 +11,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 
 export type SortDirection = 'asc' | 'desc';
 
@@ -96,7 +96,7 @@ function compare(a: unknown, b: unknown): number {
 @Component({
   selector: 'app-data-table',
   standalone: true,
-  imports: [NgTemplateOutlet, MatIcon],
+  imports: [NgTemplateOutlet, LucideAngularModule],
   providers: [DatePipe, DecimalPipe],
   templateUrl: './data-table.html',
   styleUrl: './data-table.css',
@@ -292,8 +292,8 @@ export class DataTable<T> {
 
   protected sortIcon(col: TableColumn<T>): string {
     const { key, direction } = this.sort();
-    if (key !== col.key) return 'unfold_more';
-    return direction === 'asc' ? 'arrow_upward' : 'arrow_downward';
+    if (key !== col.key) return 'chevrons-up-down';
+    return direction === 'asc' ? 'arrow-up' : 'arrow-down';
   }
 
   protected onHeaderClick(col: TableColumn<T>): void {

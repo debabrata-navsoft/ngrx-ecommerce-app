@@ -1,6 +1,6 @@
 <div class="slider-wrapper">
   <button class="nav prev" (click)="prev()" [disabled]="currentIndex() === 0">
-    <mat-icon class="material-icons-outlined">chevron_left</mat-icon>
+    <lucide-icon name="chevron-left" />
   </button>
 
   <div class="slider-viewport">
@@ -21,6 +21,6 @@
     (click)="next()"
     [disabled]="currentIndex() + pageSize() >= fullProducts().length"
   >
-    <mat-icon class="material-icons-outlined">chevron_right</mat-icon>
+    <lucide-icon name="chevron-right" />
   </button>
 </div>

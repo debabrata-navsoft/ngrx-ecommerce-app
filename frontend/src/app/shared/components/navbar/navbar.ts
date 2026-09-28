@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AuthService } from '../../../core/services/auth-user.service';
@@ -14,7 +14,7 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, CommonModule, MatSnackBarModule, MatIconModule],
+  imports: [RouterLink, CommonModule, MatSnackBarModule, LucideAngularModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })

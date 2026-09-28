@@ -205,23 +205,36 @@ Both services expose `currentUser$: Observable<User | null>`, sourced from
 
 `authGuard` is also applied to `/login` and `/signup`, where it allows anonymous visitors through and redirects already-logged-in users away. On rejection it stashes the target URL in `localStorage.redirectUrl`.
 
-### State: signals in root services, the API as the source of truth
+### State: NgRx store, services as facades, the API as the source of truth
 
-Services are `providedIn: 'root'` and hold state in signals rather than a store library.
-`CartService`, `WishlistService`, and `SaveLaterService` all follow the same shape:
+Session, cart, wishlist and saved-later state lives in an NgRx store
+(`@ngrx/store` + `@ngrx/effects`), registered by `provideAppStore()` in
+`frontend/src/app/core/store/index.ts`. Each slice is a folder under `core/store/` with
+`*.actions.ts` (`createActionGroup`), `*.reducer.ts` (`createFeature`, selectors included)
+and `*.effects.ts` (functional effects that own the HTTP calls).
 
-1. Constructor subscribes to `SessionService.user$` — on login call `loadX()`, on logout reset the signal to `[]`.
-2. `loadX()` GETs the list and sets the signal. Runs on the server too.
-3. Mutations update the signal optimistically *and* fire the request, so the UI does not wait on the round-trip.
-4. Derived values (`itemCount`, `totalPrice`) are `computed()`.
+`SessionService`, `CartService`, `WishlistService` and `SaveLaterService` are **facades**:
+they expose `store.selectSignal(...)` signals with the same names as before (`cart`,
+`itemCount`, `totalPrice`, `getWishlistSignal`, `savedLater`, `user`, `isReady`) and turn
+method calls into `dispatch`. Components should keep going through the facades.
 
-The difference from the Firestore version: **every mutation endpoint returns the full
-updated list**, so the optimistic value is reconciled against the server response rather
-than assumed correct, and a failed request rolls the signal back instead of leaving the
-UI lying. Follow that pattern (`CartService.commit()`) for new mutations.
+1. `init$` in `session.effects.ts` calls `/auth/me` on `ROOT_EFFECTS_INIT`. The result, and every
+   login/logout/profile save, is `SessionActions.settled`. The session state starts as
+   `undefined`, and `user$` filters that value out, which is the same guarantee the old `BehaviorSubject` gave.
+2. Each list's `followSession$` effect maps `settled` to `load` (signed in) or `reset`.
+   Runs on the server too.
+3. Mutations are optimistic actions: the reducer applies them and an effect sends the request.
+   Effects subscribe for you, so the cold-observable gotcha cannot happen, and the facade
+   methods return `void`.
+4. Each slice keeps `items` plus `confirmed`, the last list the server returned. A
+   `*Succeeded` action sets both to the response. A `syncFailed` action rolls `items`
+   back to `confirmed`. Follow that pattern for new mutations.
+5. Cross-list moves are one action handled by two reducers: `CartActions.saveForLaterSucceeded`
+   updates both `cart` and `savedLater`, and `SavedLaterActions.moveToCartSucceeded` does the same.
 
-Subscriptions in these services are cleaned up with `inject(DestroyRef)`; the old
-Firestore versions leaked their `authState` subscription.
+Dev-mode runtime checks freeze state and action payloads, so never mutate an object read from
+these signals in place. Products and orders are not in the store; they are per-page fetches
+through `ProductService`/`OrderService`.
 
 ### MongoDB collections
 
@@ -362,6 +375,7 @@ this is only how it got there.
 - **File and class naming follows the Angular 20 style with no type suffix**: `product-list-page.ts` exports `ProductListPage`, `cart.service.ts` exports `CartService`. Do not add `.component.ts`. Templates and styles are separate files (`templateUrl`/`styleUrl`), CSS not SCSS — `frontend/src/custom-theme.scss` is the only SCSS file (Angular Material theme).
 - All components are `standalone: true` with explicit `imports`. Dependencies use `inject()`, not constructor parameters.
 - Templates use the built-in control flow (`@if`, `@for`), not `*ngIf`/`*ngFor`.
+- Icons are **Lucide** (`lucide-angular`), not `mat-icon` — the Material Icons font is no longer loaded. Write `<lucide-icon name="chevron-right" />` and import `LucideAngularModule`. Every name must be registered in `shared/data/icons.data.ts` (`APP_ICONS`, picked once in `app.config.ts`); an unregistered name **throws at render time**, including during SSR. Lucide's `heart` is outline-only, so the wishlisted fill comes from `lucide-icon.active-wish > svg` in `styles.css` — rules that style the inner `<svg>` must be global, because it is created inside Lucide's component.
 - Subscriptions are cleaned up with `inject(DestroyRef).onDestroy(() => sub.unsubscribe())` rather than `ngOnDestroy`.
 - TypeScript is `strict` with `noPropertyAccessFromIndexSignature`, so index-signature access is bracketed: `err.error?.['message']`. `strictTemplates` is on.
 - Shared helpers live under `shared/`: `shared/pipes/` (`truncate`, `time-ago`, `category-label`), `shared/directives/highlight.ts`, `shared/utils/rating.util.ts`. Category taxonomy is a static list in `shared/data/category.data.ts` — subcategory slugs there must match the `subCategory` values stored on product documents, since filtering compares them lowercased. There is no seed catalogue to cross-check against any more, so a new subcategory must be matched by hand against what is actually in the `products` collection.
@@ -405,4 +419,4 @@ this is only how it got there.
 - Two unrelated components are both named `TodayDeals` (`shared/components/categories/today-deals/` and `pages/sidebar/today-deals/`). Check the import path.
 - Addresses are keyed by **id**, not array index. The old code replaced the whole `addresses` array, which dropped any address added in another tab between read and write.
 - **Both list moves are single atomic requests, and pairing them with a second call is the recurring bug here.** `CartService.saveForLater()` (`POST /api/cart/:productId/save-for-later`) must **not** be followed by `removeItem()` — the old two-call requirement lost items when only half ran. `SaveLaterService.moveToCart()` (`POST /api/saved-later/:productId/move-to-cart`) must **not** be followed by `addCartItemToCart()` — the move already creates the cart row, so the extra `POST /cart` incremented it and every trip through Saved for Later bumped the quantity by one. `moveLineItem` `$set`s the quantity rather than incrementing, so the move alone is always correct.
-- Test coverage is three spec files (`app.spec.ts`, `shared/components/loader/loader.spec.ts`, `core/services/wishlist.service.spec.ts`); there is no established testing pattern for the API-backed services, and the backend has no tests yet.
+- Test coverage is four spec files (`app.spec.ts`, `shared/components/loader/loader.spec.ts`, `core/services/wishlist.service.spec.ts`, `core/store/cart/cart.reducer.spec.ts`); the wishlist spec shows how to test a facade against the real store + effects with `HttpTestingController`; there is no established testing pattern for the API-backed services, and the backend has no tests yet.

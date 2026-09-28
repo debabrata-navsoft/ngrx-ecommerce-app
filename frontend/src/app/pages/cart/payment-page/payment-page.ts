@@ -170,7 +170,7 @@ export class PaymentPage {
 
   private finish(orderId: string) {
     this.stop();
-    this.cartService.cart.set([]);
+    this.cartService.markOrderPlaced();
     this.snackbar.success('Order placed successfully!');
     this.router.navigate(['/cart/order-success', orderId]);
   }

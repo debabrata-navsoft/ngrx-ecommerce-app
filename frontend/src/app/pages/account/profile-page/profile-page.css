@@ -96,7 +96,7 @@
   cursor: progress;
 }
 
-.avatar-edit mat-icon {
+.avatar-edit lucide-icon {
   font-size: 13px;
   width: 13px;
   height: 13px;

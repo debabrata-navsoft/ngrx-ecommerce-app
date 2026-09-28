@@ -1,6 +1,6 @@
 import { Component, computed, effect, input, output, signal, untracked } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 
 import { AddressUser } from '../../models/user.model';
 import { AddressField, validateAddress } from '../../../core/form-errors';
@@ -21,7 +21,7 @@ export function emptyAddress(): AddressUser {
 @Component({
   selector: 'app-address-form',
   standalone: true,
-  imports: [FormsModule, MatIconModule],
+  imports: [FormsModule, LucideAngularModule],
   templateUrl: './address-form.html',
   styleUrl: './address-form.css',
 })

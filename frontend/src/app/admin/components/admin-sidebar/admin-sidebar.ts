@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 
 export interface AdminNavItem {
   label: string;
@@ -18,7 +18,7 @@ export interface AdminNavGroup {
 @Component({
   selector: 'app-admin-sidebar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, MatIcon],
+  imports: [RouterLink, RouterLinkActive, LucideAngularModule],
   templateUrl: './admin-sidebar.html',
   styleUrl: './admin-sidebar.css',
   host: {
@@ -34,22 +34,22 @@ export class AdminSidebar {
   readonly groups: AdminNavGroup[] = [
     {
       label: 'Overview',
-      items: [{ label: 'Dashboard', icon: 'grid_view', route: '/admin/dashboard' }],
+      items: [{ label: 'Dashboard', icon: 'layout-grid', route: '/admin/dashboard' }],
     },
     {
       label: 'Catalogue',
       items: [
-        { label: 'Products', icon: 'inventory_2', route: '/admin/products', exact: true },
-        { label: 'Add product', icon: 'add_box', route: '/admin/products/add-product' },
+        { label: 'Products', icon: 'package', route: '/admin/products', exact: true },
+        { label: 'Add product', icon: 'square-plus', route: '/admin/products/add-product' },
       ],
     },
     {
       label: 'Commerce',
-      items: [{ label: 'Orders', icon: 'receipt_long', route: '/admin/orders' }],
+      items: [{ label: 'Orders', icon: 'receipt-text', route: '/admin/orders' }],
     },
     {
       label: 'People',
-      items: [{ label: 'Customers', icon: 'group', route: '/admin/users' }],
+      items: [{ label: 'Customers', icon: 'users', route: '/admin/users' }],
     },
   ];
 }

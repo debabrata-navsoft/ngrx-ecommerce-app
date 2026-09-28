@@ -1,7 +1,7 @@
 import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { DecimalPipe, SlicePipe, TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 
 import { mergeOrderEvent, OrderService } from '../../../core/services/order.service';
 import { SnackbarService } from '../../../core/services/snackbar.service';
@@ -13,7 +13,7 @@ type StatusFilter = 'all' | Order['status'];
 @Component({
   selector: 'app-order-list',
   standalone: true,
-  imports: [RouterLink, MatIcon, DecimalPipe, SlicePipe, TitleCasePipe, DataTable, TableCellDef],
+  imports: [RouterLink, LucideAngularModule, DecimalPipe, SlicePipe, TitleCasePipe, DataTable, TableCellDef],
   templateUrl: './order-list.html',
   styleUrl: './order-list.css',
 })

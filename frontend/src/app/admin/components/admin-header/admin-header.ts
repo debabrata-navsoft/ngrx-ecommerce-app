@@ -1,7 +1,7 @@
 import { Component, DestroyRef, OnInit, computed, inject, input, output, signal } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs';
-import { MatIcon } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 
 import { AdminAuthService } from '../../../core/services/auth-admin.service';
 import { SnackbarService } from '../../../core/services/snackbar.service';
@@ -10,7 +10,7 @@ import { User } from '../../../shared/models/user.model';
 @Component({
   selector: 'app-admin-header',
   standalone: true,
-  imports: [RouterLink, MatIcon],
+  imports: [RouterLink, LucideAngularModule],
   templateUrl: './admin-header.html',
   styleUrl: './admin-header.css',
   host: {

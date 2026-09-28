@@ -124,7 +124,7 @@
   color: var(--adm-text);
 }
 
-.adm-card__title mat-icon {
+.adm-card__title lucide-icon {
   font-size: 19px;
   width: 19px;
   height: 19px;
@@ -166,7 +166,7 @@
     box-shadow 0.15s ease;
 }
 
-.adm-btn mat-icon {
+.adm-btn lucide-icon {
   font-size: 18px;
   width: 18px;
   height: 18px;
@@ -247,7 +247,7 @@
     border-color 0.15s ease;
 }
 
-.adm-icon-btn mat-icon {
+.adm-icon-btn lucide-icon {
   font-size: 18px;
   width: 18px;
   height: 18px;
@@ -409,7 +409,7 @@
   text-align: center;
 }
 
-.adm-empty mat-icon {
+.adm-empty lucide-icon {
   font-size: 34px;
   width: 34px;
   height: 34px;

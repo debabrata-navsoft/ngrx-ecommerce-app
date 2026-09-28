@@ -6,6 +6,7 @@ import { Loader } from '../../../shared/components/loader/loader';
 import { Order, OrderActivity, OrderItem } from '../../../shared/models/order.model';
 import { LoaderService } from '../../../core/services/loader.service';
 import { OrderService } from '../../../core/services/order.service';
+import { LucideAngularModule } from 'lucide-angular';
 
 /** The happy path, in order. Cancelled is handled separately since it ends the track. */
 const STEPS: { status: Order['status']; label: string; blurb: string }[] = [
@@ -17,7 +18,7 @@ const STEPS: { status: Order['status']; label: string; blurb: string }[] = [
 @Component({
   selector: 'app-order-track',
   standalone: true,
-  imports: [CommonModule, RouterLink, Loader],
+  imports: [CommonModule, RouterLink, Loader, LucideAngularModule],
   templateUrl: './order-track.html',
   styleUrl: './order-track.css',
 })

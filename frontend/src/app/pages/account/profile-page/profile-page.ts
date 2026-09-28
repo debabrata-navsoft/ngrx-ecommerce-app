@@ -1,6 +1,6 @@
 import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { EMPTY, switchMap } from 'rxjs';
@@ -26,7 +26,7 @@ const MAX_AVATAR_BYTES = 5 * 1024 * 1024;
 @Component({
   selector: 'app-profile-page',
   standalone: true,
-  imports: [ProfileDetails, Address, OrderHistory, Loader, FormsModule, MatIconModule],
+  imports: [ProfileDetails, Address, OrderHistory, Loader, FormsModule, LucideAngularModule],
   templateUrl: './profile-page.html',
   styleUrl: './profile-page.css',
 })

@@ -1,25 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {
-  faFacebookF,
-  faInstagram,
-  faXTwitter,
-  faYoutube,
-} from '@fortawesome/free-brands-svg-icons';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, FontAwesomeModule],
+  imports: [RouterLink, RouterLinkActive, LucideAngularModule],
   templateUrl: './footer.html',
   styleUrl: './footer.css',
 })
 export class Footer {
   currentYear = new Date().getFullYear();
-
-  faFacebook = faFacebookF;
-  faInstagram = faInstagram;
-  faXTwitter = faXTwitter;
-  faYoutube = faYoutube;
 }

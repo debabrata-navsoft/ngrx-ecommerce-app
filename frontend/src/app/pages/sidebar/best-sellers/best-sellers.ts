@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, input, Input, OnInit, signal } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
 import { CategoryLabelPipe } from '../../../shared/pipes/category-label.pipe';
 import { Highlight } from '../../../shared/directives/highlight';
@@ -17,7 +17,7 @@ import { Loader } from '../../../shared/components/loader/loader';
 @Component({
   selector: 'app-best-sellers',
   standalone: true,
-  imports: [CommonModule, MatIconModule, TruncatePipe, CategoryLabelPipe, Highlight, Loader],
+  imports: [CommonModule, LucideAngularModule, TruncatePipe, CategoryLabelPipe, Highlight, Loader],
   templateUrl: './best-sellers.html',
   styleUrl: './best-sellers.css',
 })

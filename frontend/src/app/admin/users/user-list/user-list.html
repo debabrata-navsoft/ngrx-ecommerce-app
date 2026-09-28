@@ -15,7 +15,7 @@
     title="All customers"
     searchPlaceholder="Search name, email, phone…"
     emptyMessage="No customers yet"
-    emptyIcon="group"
+    emptyIcon="users"
     sortKey="index"
     sortDirection="desc"
     [pageSize]="10"
@@ -62,7 +62,7 @@
     <ng-template appTableCell="actions" let-user>
       <div class="row-actions">
         <a class="adm-icon-btn" [routerLink]="['/admin/users', user.uid]" title="View customer">
-          <mat-icon class="material-icons-outlined">visibility</mat-icon>
+          <lucide-icon name="eye" />
         </a>
         <button
           type="button"
@@ -70,7 +70,7 @@
           title="Delete customer"
           (click)="deleteUser(user)"
         >
-          <mat-icon class="material-icons-outlined">delete</mat-icon>
+          <lucide-icon name="trash-2" />
         </button>
       </div>
     </ng-template>

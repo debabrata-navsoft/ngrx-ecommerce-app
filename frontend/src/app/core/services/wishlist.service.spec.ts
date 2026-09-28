@@ -1,11 +1,15 @@
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { provideEffects } from '@ngrx/effects';
+import { provideStore } from '@ngrx/store';
 
 import { environment } from '../../../environments/environment';
-import { SessionService } from './session.service';
 import { Product } from '../../shared/models/product.model';
+import * as sessionEffects from '../store/session/session.effects';
+import { sessionFeature } from '../store/session/session.reducer';
+import * as wishlistEffects from '../store/wishlist/wishlist.effects';
+import { wishlistFeature } from '../store/wishlist/wishlist.reducer';
 import { WishlistService } from './wishlist.service';
 
 const USER = {
@@ -41,22 +45,19 @@ describe('WishlistService', () => {
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
-        {
-          provide: SessionService,
-          useValue: {
-            user$: of(USER),
-            user: () => USER,
-            isReady: () => true,
-            uid: USER.uid,
-          },
-        },
+        provideStore({
+          [sessionFeature.name]: sessionFeature.reducer,
+          [wishlistFeature.name]: wishlistFeature.reducer,
+        }),
+        provideEffects(sessionEffects, wishlistEffects),
       ],
     });
 
     http = TestBed.inject(HttpTestingController);
     service = TestBed.inject(WishlistService);
 
-    // The constructor subscribes to the session and loads the list.
+    // The session effect resolves /auth/me on init; a signed-in user triggers the list load.
+    http.expectOne(`${environment.apiUrl}/auth/me`).flush({ user: USER });
     http.expectOne(`${environment.apiUrl}/wishlist`).flush({ items: [] });
   });
 

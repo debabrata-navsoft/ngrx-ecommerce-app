@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { Navbar } from '../navbar/navbar';
@@ -27,15 +27,7 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-header',
-  imports: [
-    RouterLink,
-    CommonModule,
-    FormsModule,
-    Navbar,
-    MatIconModule,
-    MatSnackBarModule,
-    Breadcrumb,
-  ],
+  imports: [RouterLink, CommonModule, FormsModule, Navbar, LucideAngularModule, MatSnackBarModule, Breadcrumb],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })

@@ -11,7 +11,7 @@
       </div>
       <div class="dash-topbar__right">
         <span class="dash-date">
-          <mat-icon class="material-icons-outlined">calendar_today</mat-icon>
+          <lucide-icon name="calendar" />
           {{ today | date: 'mediumDate' }}
         </span>
       </div>
@@ -21,13 +21,13 @@
     <div class="metrics-grid">
       <div class="metric-card metric-card--blue">
         <div class="metric-card__icon">
-          <mat-icon class="material-icons-outlined">people</mat-icon>
+          <lucide-icon name="users" />
         </div>
         <div class="metric-card__body">
           <span class="metric-card__label">Total Users</span>
           <span class="metric-card__value">{{ totalUsers() }}</span>
           <span class="metric-card__delta">
-            <mat-icon class="material-icons-outlined delta-icon">trending_up</mat-icon>
+            <lucide-icon class="delta-icon" name="trending-up" />
             Active accounts
           </span>
         </div>
@@ -35,13 +35,13 @@
 
       <div class="metric-card metric-card--green">
         <div class="metric-card__icon">
-          <mat-icon class="material-icons-outlined">inventory_2</mat-icon>
+          <lucide-icon name="package" />
         </div>
         <div class="metric-card__body">
           <span class="metric-card__label">Total Products</span>
           <span class="metric-card__value">{{ totalProducts() }}</span>
           <span class="metric-card__delta">
-            <mat-icon class="material-icons-outlined delta-icon">trending_up</mat-icon>
+            <lucide-icon class="delta-icon" name="trending-up" />
             In catalogue
           </span>
         </div>
@@ -49,13 +49,13 @@
 
       <div class="metric-card metric-card--amber">
         <div class="metric-card__icon">
-          <mat-icon class="material-icons-outlined">shopping_cart</mat-icon>
+          <lucide-icon name="shopping-cart" />
         </div>
         <div class="metric-card__body">
           <span class="metric-card__label">Total Orders</span>
           <span class="metric-card__value">{{ totalOrders() }}</span>
           <span class="metric-card__delta">
-            <mat-icon class="material-icons-outlined delta-icon">trending_up</mat-icon>
+            <lucide-icon class="delta-icon" name="trending-up" />
             All time
           </span>
         </div>
@@ -63,13 +63,13 @@
 
       <div class="metric-card metric-card--red">
         <div class="metric-card__icon">
-          <mat-icon class="material-icons-outlined">pending_actions</mat-icon>
+          <lucide-icon name="clipboard-clock" />
         </div>
         <div class="metric-card__body">
           <span class="metric-card__label">Pending Orders</span>
           <span class="metric-card__value">{{ pendingOrders() }}</span>
           <span class="metric-card__delta metric-card__delta--warn">
-            <mat-icon class="material-icons-outlined delta-icon">schedule</mat-icon>
+            <lucide-icon class="delta-icon" name="clock" />
             Needs attention
           </span>
         </div>
@@ -82,11 +82,11 @@
       <div class="dash-card dash-card--wide">
         <div class="dash-card__header">
           <div class="dash-card__title">
-            <mat-icon class="material-icons-outlined">receipt_long</mat-icon>
+            <lucide-icon name="receipt-text" />
             Recent Orders
           </div>
           <a routerLink="/admin/orders" class="dash-card__link">
-            View all <mat-icon class="material-icons-outlined">arrow_forward</mat-icon>
+            View all <lucide-icon name="arrow-right" />
           </a>
         </div>
 
@@ -126,7 +126,7 @@
                       [queryParams]="{ userId: order.userId }"
                       class="dash-action-btn"
                     >
-                      <mat-icon class="material-icons-outlined">open_in_new</mat-icon>
+                      <lucide-icon name="external-link" />
                     </a>
                   </td>
                 </tr>
@@ -144,11 +144,11 @@
       <div class="dash-card">
         <div class="dash-card__header">
           <div class="dash-card__title">
-            <mat-icon class="material-icons-outlined">group</mat-icon>
+            <lucide-icon name="users" />
             Recent Users
           </div>
           <a routerLink="/admin/users" class="dash-card__link">
-            View all <mat-icon class="material-icons-outlined">arrow_forward</mat-icon>
+            View all <lucide-icon name="arrow-right" />
           </a>
         </div>
 
@@ -167,7 +167,7 @@
               <div class="user-item__meta">
                 <span class="user-item__date">{{ user.createdAt | date: 'dd MMM' }}</span>
                 <a [routerLink]="['/admin/users', user.uid]" class="dash-action-btn">
-                  <mat-icon class="material-icons-outlined">chevron_right</mat-icon>
+                  <lucide-icon name="chevron-right" />
                 </a>
               </div>
             </li>
@@ -181,11 +181,11 @@
       <div class="dash-card">
         <div class="dash-card__header">
           <div class="dash-card__title">
-            <mat-icon class="material-icons-outlined">storefront</mat-icon>
+            <lucide-icon name="store" />
             Top Products
           </div>
           <a routerLink="/admin/products" class="dash-card__link">
-            View all <mat-icon class="material-icons-outlined">arrow_forward</mat-icon>
+            View all <lucide-icon name="arrow-right" />
           </a>
         </div>
 
@@ -197,7 +197,7 @@
                 <img class="product-item__img" [src]="product.image" [alt]="product.title" />
               } @else {
                 <div class="product-item__img product-item__img--placeholder">
-                  <mat-icon class="material-icons-outlined">image_not_supported</mat-icon>
+                  <lucide-icon name="image-off" />
                 </div>
               }
               <div class="product-item__info">
@@ -210,7 +210,7 @@
                 </span>
               </div>
               <a [routerLink]="['/admin/products/edit', product.id]" class="dash-action-btn">
-                <mat-icon class="material-icons-outlined">edit</mat-icon>
+                <lucide-icon name="pencil" />
               </a>
             </li>
           } @empty {
@@ -223,24 +223,24 @@
       <div class="dash-card">
         <div class="dash-card__header">
           <div class="dash-card__title">
-            <mat-icon class="material-icons-outlined">bolt</mat-icon>
+            <lucide-icon name="zap" />
             Quick Actions
           </div>
         </div>
 
         <div class="quick-actions">
           <a routerLink="/admin/products/add-product" class="quick-action quick-action--blue">
-            <mat-icon class="material-icons-outlined">add_circle</mat-icon>
+            <lucide-icon name="circle-plus" />
             <span class="quick-action__label">Add Product</span>
             <span class="quick-action__sub">New listing</span>
           </a>
           <a routerLink="/admin/users" class="quick-action quick-action--green">
-            <mat-icon class="material-icons-outlined">manage_accounts</mat-icon>
+            <lucide-icon name="user-cog" />
             <span class="quick-action__label">Manage Users</span>
             <span class="quick-action__sub">{{ totalUsers() }} accounts</span>
           </a>
           <a routerLink="/admin/orders" class="quick-action quick-action--amber">
-            <mat-icon class="material-icons-outlined">local_shipping</mat-icon>
+            <lucide-icon name="truck" />
             <span class="quick-action__label">All Orders</span>
             <span class="quick-action__sub">{{ totalOrders() }} total</span>
           </a>
@@ -249,12 +249,12 @@
             [queryParams]="{ status: 'pending' }"
             class="quick-action quick-action--red"
           >
-            <mat-icon class="material-icons-outlined">hourglass_top</mat-icon>
+            <lucide-icon name="hourglass" />
             <span class="quick-action__label">Pending</span>
             <span class="quick-action__sub">{{ pendingOrders() }} waiting</span>
           </a>
           <a routerLink="/admin/products" class="quick-action quick-action--purple">
-            <mat-icon class="material-icons-outlined">inventory</mat-icon>
+            <lucide-icon name="boxes" />
             <span class="quick-action__label">Inventory</span>
             <span class="quick-action__sub">{{ totalProducts() }} items</span>
           </a>
@@ -263,7 +263,7 @@
             [queryParams]="{ status: 'cancelled' }"
             class="quick-action quick-action--neutral"
           >
-            <mat-icon class="material-icons-outlined">cancel</mat-icon>
+            <lucide-icon name="circle-x" />
             <span class="quick-action__label">Cancelled</span>
             <span class="quick-action__sub">{{ cancelledOrders() }} orders</span>
           </a>

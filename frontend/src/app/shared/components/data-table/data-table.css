@@ -75,7 +75,7 @@
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
 }
 
-.dt__search mat-icon {
+.dt__search lucide-icon {
   font-size: 18px;
   width: 18px;
   height: 18px;
@@ -204,7 +204,7 @@
   object-fit: cover;
 }
 
-.dt__thumb--empty mat-icon {
+.dt__thumb--empty lucide-icon {
   font-size: 18px;
   width: 18px;
   height: 18px;
@@ -301,7 +301,7 @@
     border-color 0.15s ease;
 }
 
-.dt__page-btn mat-icon {
+.dt__page-btn lucide-icon {
   font-size: 18px;
   width: 18px;
   height: 18px;

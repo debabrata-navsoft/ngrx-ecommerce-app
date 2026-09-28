@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { MatIconModule } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AdminAuthService } from '../../../core/services/auth-admin.service';
@@ -13,7 +13,7 @@ import { applyServerErrors, clearServerErrors } from '../../../core/form-errors'
 @Component({
   selector: 'app-admin-login',
   standalone: true,
-  imports: [ReactiveFormsModule, MatProgressSpinnerModule, MatIconModule],
+  imports: [ReactiveFormsModule, MatProgressSpinnerModule, LucideAngularModule],
   templateUrl: './admin-login-page.html',
   styleUrl: './admin-login-page.css',
 })

@@ -91,7 +91,7 @@ p {
   margin: 0;
 }
 
-mat-icon .remove {
+lucide-icon .remove {
   margin: 0;
 }
 
@@ -234,7 +234,7 @@ button:hover {
   text-align: left;
 }
 
-.server-error mat-icon {
+.server-error lucide-icon {
   flex: none;
   color: #e03131;
   font-size: 20px;
@@ -265,7 +265,7 @@ button:hover {
   color: #e8590c;
 }
 
-.toggle-password mat-icon {
+.toggle-password lucide-icon {
   margin: 0;
   color: inherit;
 }

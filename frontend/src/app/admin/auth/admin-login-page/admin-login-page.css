@@ -103,7 +103,7 @@
   background: rgba(230, 119, 0, 0.14);
 }
 
-.toggle-password mat-icon {
+.toggle-password lucide-icon {
   font-size: 1.15rem;
   width: 1.15rem;
   height: 1.15rem;
@@ -137,7 +137,7 @@
   border-radius: 8px;
 }
 
-.server-error mat-icon {
+.server-error lucide-icon {
   flex-shrink: 0;
   font-size: 1.1rem;
   width: 1.1rem;

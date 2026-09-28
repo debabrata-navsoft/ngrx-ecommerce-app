@@ -6,7 +6,7 @@
       aria-label="Open navigation"
       (click)="toggleDrawer.emit()"
     >
-      <mat-icon class="material-icons-outlined">menu</mat-icon>
+      <lucide-icon name="menu" />
     </button>
 
     <button
@@ -15,9 +15,7 @@
       [attr.aria-label]="collapsed() ? 'Expand navigation' : 'Collapse navigation'"
       (click)="toggleCollapse.emit()"
     >
-      <mat-icon class="material-icons-outlined">
-        {{ collapsed() ? 'menu_open' : 'menu' }}
-      </mat-icon>
+      <lucide-icon [name]="collapsed() ? 'panel-left-open' : 'menu'" />
     </button>
 
     <div class="hdr__titles">
@@ -30,7 +28,7 @@
 
   <div class="hdr__right">
     <a class="hdr__store" routerLink="/" target="_blank" rel="noopener">
-      <mat-icon class="material-icons-outlined">open_in_new</mat-icon>
+      <lucide-icon name="external-link" />
       <span>Storefront</span>
     </a>
 
@@ -56,7 +54,7 @@
           <small>{{ admin()?.role || 'admin' }}</small>
         </span>
 
-        <mat-icon class="material-icons-outlined hdr__chevron">expand_more</mat-icon>
+        <lucide-icon class="hdr__chevron" name="chevron-down" />
       </button>
 
       @if (menuOpen()) {
@@ -67,19 +65,19 @@
           </div>
 
           <a class="hdr__menu-item" role="menuitem" routerLink="/admin/users" (click)="closeMenu()">
-            <mat-icon class="material-icons-outlined">group</mat-icon>
+            <lucide-icon name="users" />
             Customers
           </a>
 
           <a class="hdr__menu-item" role="menuitem" routerLink="/admin/orders" (click)="closeMenu()">
-            <mat-icon class="material-icons-outlined">receipt_long</mat-icon>
+            <lucide-icon name="receipt-text" />
             Orders
           </a>
 
           <hr class="adm-divider" />
 
           <button type="button" class="hdr__menu-item hdr__menu-item--danger" role="menuitem" (click)="logout()">
-            <mat-icon class="material-icons-outlined">logout</mat-icon>
+            <lucide-icon name="log-out" />
             Log out
           </button>
         </div>

@@ -2,7 +2,7 @@ import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angula
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatIcon } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 
 import { ProductService } from '../../../core/services/product.service';
 import { Product } from '../../../shared/models/product.model';
@@ -14,7 +14,7 @@ import { Loader } from '../../../shared/components/loader/loader';
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [RouterLink, CommonModule, MatIcon, TruncatePipe, MatPaginatorModule, Loader],
+  imports: [RouterLink, CommonModule, LucideAngularModule, TruncatePipe, MatPaginatorModule, Loader],
   templateUrl: './product-list-table.html',
   styleUrl: './product-list-table.css',
 })

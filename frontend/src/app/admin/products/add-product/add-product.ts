@@ -3,7 +3,7 @@ import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 
 import { ProductService } from '../../../core/services/product.service';
 import { Product, ProductField } from '../../../shared/models/product.model';
@@ -14,7 +14,7 @@ import { Loader } from '../../../shared/components/loader/loader';
 @Component({
   selector: 'app-add-product',
   standalone: true,
-  imports: [FormsModule, MatSnackBarModule, CommonModule, MatIcon, MatIconModule, Loader],
+  imports: [FormsModule, MatSnackBarModule, CommonModule, LucideAngularModule, Loader],
   templateUrl: './add-product.html',
   styleUrl: './add-product.css',
 })

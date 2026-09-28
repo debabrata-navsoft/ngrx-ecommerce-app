@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { ApiFailure } from '../../../core/services/api.service';
@@ -19,7 +19,7 @@ import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [FormsModule, RouterLink, ReactiveFormsModule, MatIconModule, MatProgressSpinnerModule],
+  imports: [FormsModule, RouterLink, ReactiveFormsModule, LucideAngularModule, MatProgressSpinnerModule],
   templateUrl: './login-page.html',
   styleUrl: './login-page.css',
 })

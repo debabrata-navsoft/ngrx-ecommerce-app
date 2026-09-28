@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 import { Router, RouterLink } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
@@ -21,7 +21,7 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
 @Component({
   selector: 'app-signup-page',
   standalone: true,
-  imports: [FormsModule, RouterLink, ReactiveFormsModule, MatIconModule, MatProgressSpinnerModule],
+  imports: [FormsModule, RouterLink, ReactiveFormsModule, LucideAngularModule, MatProgressSpinnerModule],
   templateUrl: './signup-page.html',
   styleUrl: './signup-page.css',
 })

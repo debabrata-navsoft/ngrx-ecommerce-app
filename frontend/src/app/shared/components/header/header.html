@@ -19,7 +19,7 @@
       />
 
       <button (click)="searchProduct()">
-        <mat-icon class="material-icons-outlined">search</mat-icon>
+        <lucide-icon name="search" />
       </button>
 
       @if (suggestions().length > 0) {
@@ -50,11 +50,11 @@
                 <div class="overlay" (click)="closeMenu()"></div>
                 <div class="dropdown">
                   <button (click)="viewProfile()">
-                    <mat-icon class="material-icons-outlined person">person_outline</mat-icon>My
+                    <lucide-icon class="person" name="user" />My
                     Account
                   </button>
                   <button (click)="logout()">
-                    <mat-icon class="material-icons-outlined logout">logout</mat-icon>Logout
+                    <lucide-icon class="logout" name="log-out" />Logout
                   </button>
                 </div>
               }
@@ -65,7 +65,7 @@
 
       <div class="icons">
         <a routerLink="/wishlist" class="fav-icon">
-          <mat-icon class="material-icons-outlined">favorite_border</mat-icon>
+          <lucide-icon name="heart" />
 
           @if (isLoggedIn) {
             <span class="fav-badge">
@@ -78,7 +78,7 @@
         </a>
 
         <a routerLink="/cart" class="cart-icon">
-          <mat-icon class="material-icons-outlined">shopping_cart</mat-icon>
+          <lucide-icon name="shopping-cart" />
 
           @if (isLoggedIn) {
             <span class="cart-badge">

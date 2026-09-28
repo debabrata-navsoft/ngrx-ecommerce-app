@@ -60,3 +60,29 @@ body {
 .cdk-overlay-container {
   z-index: 1200 !important;
 }
+
+/* Lucide icons. Sized by font-size like the Material icon font they replaced, so the
+   component rules that set font-size on an icon keep working. The <svg> is created inside
+   Lucide's own component, so rules that must reach it (fill) live here, not in the
+   component stylesheets. */
+lucide-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+  font-size: 24px;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+lucide-icon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Material had a filled "favorite" glyph; Lucide's heart is outline-only. */
+lucide-icon.active-wish > svg {
+  fill: currentColor;
+}

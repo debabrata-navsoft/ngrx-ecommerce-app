@@ -20,7 +20,7 @@
 
         @if (searchable()) {
           <label class="dt__search">
-            <mat-icon class="material-icons-outlined">search</mat-icon>
+            <lucide-icon name="search" />
             <input
               type="search"
               class="dt__search-input"
@@ -57,12 +57,7 @@
               <span class="dt__th-inner">
                 {{ col.header }}
                 @if (col.sortable) {
-                  <mat-icon
-                    class="material-icons-outlined dt__sort"
-                    [class.dt__sort--on]="sort().key === col.key"
-                  >
-                    {{ sortIcon(col) }}
-                  </mat-icon>
+                  <lucide-icon class="dt__sort" [class.dt__sort--on]="sort().key === col.key" [name]="sortIcon(col)" />
                 }
               </span>
             </th>
@@ -103,7 +98,7 @@
                           <img class="dt__thumb" [src]="imageSrc(col, row)" alt="" loading="lazy" />
                         } @else {
                           <span class="dt__thumb dt__thumb--empty">
-                            <mat-icon class="material-icons-outlined">image</mat-icon>
+                            <lucide-icon name="image" />
                           </span>
                         }
                       }
@@ -122,7 +117,7 @@
             <tr>
               <td [attr.colspan]="columns().length">
                 <div class="adm-empty">
-                  <mat-icon class="material-icons-outlined">{{ emptyIcon() }}</mat-icon>
+                  <lucide-icon [name]="emptyIcon()" />
                   <span>{{ search() ? 'No results for “' + search() + '”' : emptyMessage() }}</span>
                   @if (search()) {
                     <button type="button" class="adm-btn adm-btn--sm adm-btn--subtle" (click)="setSearch('')">
@@ -166,7 +161,7 @@
             [disabled]="pageIndex() === 0"
             (click)="goTo(pageIndex() - 1)"
           >
-            <mat-icon class="material-icons-outlined">chevron_left</mat-icon>
+            <lucide-icon name="chevron-left" />
           </button>
 
           @for (page of pages(); track $index) {
@@ -192,7 +187,7 @@
             [disabled]="pageIndex() >= pageCount() - 1"
             (click)="goTo(pageIndex() + 1)"
           >
-            <mat-icon class="material-icons-outlined">chevron_right</mat-icon>
+            <lucide-icon name="chevron-right" />
           </button>
         </nav>
       }

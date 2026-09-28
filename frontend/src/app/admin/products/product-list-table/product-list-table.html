@@ -27,9 +27,7 @@
             <th (click)="toggleSort()">
               <div class="id-arrow">
                 ID
-                <mat-icon class="material-icons-outlined">
-                  {{ sortDirection() === 'desc' ? 'arrow_upward' : 'arrow_downward' }}
-                </mat-icon>
+                <lucide-icon [name]="sortDirection() === 'desc' ? 'arrow-up' : 'arrow-down'" />
               </div>
             </th>
             <!-- <th>ID</th> -->
@@ -109,11 +107,11 @@
 
               <td class="product-body-btn">
                 <button [routerLink]="['/admin/products/edit', product.id]">
-                  <mat-icon>edit</mat-icon>
+                  <lucide-icon name="pencil" />
                 </button>
 
                 <button (click)="deleteProduct(product.id!)">
-                  <mat-icon>delete</mat-icon>
+                  <lucide-icon name="trash-2" />
                 </button>
               </td>
             </tr>

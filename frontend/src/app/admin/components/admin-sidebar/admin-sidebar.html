@@ -23,7 +23,7 @@
                 [attr.title]="collapsed() ? item.label : null"
                 (click)="navigated.emit()"
               >
-                <mat-icon class="material-icons-outlined nav__icon">{{ item.icon }}</mat-icon>
+                <lucide-icon class="nav__icon" [name]="item.icon" />
                 <span class="nav__label">{{ item.label }}</span>
               </a>
             </li>
@@ -34,7 +34,7 @@
   </nav>
 
   <a class="nav__store" routerLink="/" (click)="navigated.emit()">
-    <mat-icon class="material-icons-outlined nav__icon">storefront</mat-icon>
+    <lucide-icon class="nav__icon" name="store" />
     <span class="nav__label">View storefront</span>
   </a>
 </div>

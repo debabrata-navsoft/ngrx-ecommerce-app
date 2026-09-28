@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, input, Input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 
 import { AuthService } from '../../../core/services/auth-user.service';
 import { ProductService } from '../../../core/services/product.service';
@@ -19,7 +19,7 @@ const MAX_RELATED = 8;
 @Component({
   selector: 'app-product-detail-page',
   standalone: true,
-  imports: [CommonModule, Error, MatIcon, CategoryLabelPipe],
+  imports: [CommonModule, Error, LucideAngularModule, CategoryLabelPipe],
   templateUrl: './product-detail-page.html',
   styleUrl: './product-detail-page.css',
 })

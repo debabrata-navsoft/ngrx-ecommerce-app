@@ -49,9 +49,7 @@
             [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
             [attr.aria-pressed]="showPassword()"
           >
-            <mat-icon class="material-icons-outlined">
-              {{ showPassword() ? 'visibility_off' : 'visibility' }}
-            </mat-icon>
+            <lucide-icon [name]="showPassword() ? 'eye-off' : 'eye'" />
           </button>
         </div>
 
@@ -70,7 +68,7 @@
       <!-- Failures belonging to no single field: a non-admin account, or the API being down. -->
       @if (serverError()) {
         <div class="server-error">
-          <mat-icon class="material-icons-outlined">error_outline</mat-icon>
+          <lucide-icon name="circle-alert" />
           <p class="error-line">{{ serverError() }}</p>
         </div>
       }

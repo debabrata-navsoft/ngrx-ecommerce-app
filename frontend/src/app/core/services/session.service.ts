@@ -1,38 +1,32 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { BehaviorSubject, catchError, filter, map, Observable, of, tap } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { filter, Observable } from 'rxjs';
 
 import { User } from '../../shared/models/user.model';
-import { ApiService } from './api.service';
+import { SessionActions } from '../store/session/session.actions';
+import { sessionFeature } from '../store/session/session.reducer';
 
+/**
+ * Facade over the `session` store slice. The initial /auth/me call is made by the session
+ * effects on ROOT_EFFECTS_INIT, not by this constructor.
+ */
 @Injectable({ providedIn: 'root' })
 export class SessionService {
-  private api = inject(ApiService);
+  private store = inject(Store);
 
-  private subject = new BehaviorSubject<User | null | undefined>(undefined);
-
-  readonly user$: Observable<User | null> = this.subject
-    .asObservable()
+  readonly user$: Observable<User | null> = this.store
+    .select(sessionFeature.selectUser)
     .pipe(filter((value): value is User | null => value !== undefined));
 
-  readonly user = signal<User | null>(null);
-  readonly isReady = signal(false);
+  readonly user = this.store.selectSignal(sessionFeature.selectCurrentUser);
+  readonly isReady = this.store.selectSignal(sessionFeature.selectIsReady);
 
-  constructor() {
-    this.refresh().subscribe();
-  }
-
-  refresh(): Observable<User | null> {
-    return this.api.get<{ user: User | null }>('/auth/me').pipe(
-      map((res) => res.user),
-      catchError(() => of(null)),
-      tap((user) => this.settle(user)),
-    );
+  refresh(): void {
+    this.store.dispatch(SessionActions.refresh());
   }
 
   settle(user: User | null): void {
-    this.subject.next(user);
-    this.user.set(user);
-    this.isReady.set(true);
+    this.store.dispatch(SessionActions.settled({ user }));
   }
 
   clear(): void {

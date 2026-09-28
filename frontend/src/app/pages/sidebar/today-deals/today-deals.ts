@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 
 import { ProductService } from '../../../core/services/product.service';
 import { WishlistService } from '../../../core/services/wishlist.service';
@@ -27,7 +27,7 @@ import { Loader } from '../../../shared/components/loader/loader';
 @Component({
   selector: 'app-today-deals',
   standalone: true,
-  imports: [CommonModule, MatIconModule, TruncatePipe, CategoryLabelPipe, Highlight, Loader],
+  imports: [CommonModule, LucideAngularModule, TruncatePipe, CategoryLabelPipe, Highlight, Loader],
   templateUrl: './today-deals.html',
   styleUrl: './today-deals.css',
 })

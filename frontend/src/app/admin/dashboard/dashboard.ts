@@ -1,7 +1,7 @@
 import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { CommonModule, DatePipe, DecimalPipe, SlicePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 
 import { UserService } from '../../core/services/user.service';
 import { ProductService } from '../../core/services/product.service';
@@ -17,16 +17,7 @@ import { Loader } from '../../shared/components/loader/loader';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    MatIcon,
-    TruncatePipe,
-    DatePipe,
-    DecimalPipe,
-    SlicePipe,
-    Loader,
-  ],
+  imports: [CommonModule, RouterModule, LucideAngularModule, TruncatePipe, DatePipe, DecimalPipe, SlicePipe, Loader],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })

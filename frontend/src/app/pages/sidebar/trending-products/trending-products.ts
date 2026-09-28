@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, input, Input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 
 import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
 import { CategoryLabelPipe } from '../../../shared/pipes/category-label.pipe';
@@ -18,7 +18,7 @@ import { Loader } from '../../../shared/components/loader/loader';
 @Component({
   selector: 'app-trending-products',
   standalone: true,
-  imports: [CommonModule, MatIconModule, TruncatePipe, CategoryLabelPipe, Highlight, Loader],
+  imports: [CommonModule, LucideAngularModule, TruncatePipe, CategoryLabelPipe, Highlight, Loader],
   templateUrl: './trending-products.html',
   styleUrl: './trending-products.css',
 })

@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
+import { LucideAngularModule } from 'lucide-angular';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -18,7 +18,7 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
 @Component({
   selector: 'app-reset-password-page',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, MatIconModule, MatProgressSpinnerModule],
+  imports: [RouterLink, ReactiveFormsModule, LucideAngularModule, MatProgressSpinnerModule],
   templateUrl: './reset-password-page.html',
   styleUrl: './reset-password-page.css',
 })

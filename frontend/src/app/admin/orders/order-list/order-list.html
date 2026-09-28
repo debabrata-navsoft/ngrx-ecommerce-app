@@ -31,12 +31,13 @@
       <span>Status</span>
       <select
         class="adm-select"
-        [value]="statusFilter()"
         (change)="setStatusFilter($any($event.target).value)"
       >
-        <option value="all">All</option>
+        <option value="all" [selected]="statusFilter() === 'all'">All</option>
         @for (status of statuses; track status) {
-          <option [value]="status">{{ status | titlecase }}</option>
+          <option [value]="status" [selected]="status === statusFilter()">
+            {{ status | titlecase }}
+          </option>
         }
       </select>
     </label>
@@ -62,11 +63,15 @@
       <select
         class="status-select"
         [class]="'status-select ' + statusTone(order.status)"
-        [value]="order.status"
         (change)="changeStatus(order, $event)"
       >
+        <!-- [selected] per option, not [value] on the select: the select's value is set
+             before @for renders the options, so the browser fell back to the first one
+             and every order showed "Pending" after a refresh. -->
         @for (status of statuses; track status) {
-          <option [value]="status">{{ status | titlecase }}</option>
+          <option [value]="status" [selected]="status === order.status">
+            {{ status | titlecase }}
+          </option>
         }
       </select>
     </ng-template>

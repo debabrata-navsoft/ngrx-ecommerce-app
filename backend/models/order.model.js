@@ -70,6 +70,14 @@ const orderSchema = new Schema(
       enum: ['pending', 'paid', 'confirmed', 'failed'],
       default: 'pending',
     },
+    /**
+     * Set only by `abandonOrder` — the Razorpay modal was dismissed or the payment failed.
+     * That is a checkout that never became a purchase, so the order listings hide it. A
+     * deliberate cancellation (admin or customer) leaves this false and stays listed, even
+     * though it is `cancelled` with an unpaid `paymentStatus` too.
+     */
+    abandoned: { type: Boolean, default: false },
+
     razorpayOrderId: { type: String, default: '' },
     razorpayPaymentId: { type: String, default: '' },
 

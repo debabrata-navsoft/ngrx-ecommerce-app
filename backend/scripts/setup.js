@@ -39,6 +39,24 @@ async function seedAdmin() {
   console.log(`[setup] admin ready: ${admin.email}`);
 }
 
+/**
+ * Orders written before the `abandoned` flag existed were hidden by the old rule
+ * "cancelled + unpaid". Mark those as abandoned so they stay hidden; anything cancelled
+ * from now on is only hidden if abandonOrder set the flag. Idempotent: it only touches
+ * orders that have no flag yet.
+ */
+async function backfillAbandoned() {
+  const { modifiedCount } = await Order.updateMany(
+    {
+      abandoned: { $exists: false },
+      status: 'cancelled',
+      paymentStatus: { $in: ['pending', 'failed'] },
+    },
+    { $set: { abandoned: true } },
+  );
+  if (modifiedCount > 0) console.log(`[setup] flagged ${modifiedCount} old abandoned checkout(s)`);
+}
+
 async function main() {
   await connectDB();
 
@@ -53,6 +71,7 @@ async function main() {
   }
 
   await seedAdmin();
+  await backfillAbandoned();
 
   await Promise.all([
     User.syncIndexes(),

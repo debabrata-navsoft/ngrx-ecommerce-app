@@ -20,8 +20,8 @@ npm run serve:ssr:ecommerce-ssr  # run the built SSR server (node dist/ecommerce
 cd backend
 npm run dev                      # node --watch, http://localhost:5000
 npm start                        # plain node
-npm run seed                     # upsert the admin user + sync indexes
-npm run seed:reset               # wipe carts/wishlists/saved-later/orders first (never products)
+npm run setup                    # upsert the admin user, backfill order flags, sync indexes
+npm run setup:reset              # wipe carts/wishlists/saved-later/orders first (never products)
 ```
 
 Run a single test: Karma has no `--grep` flag here. Either temporarily change `describe`/`it` to `fdescribe`/`fit`, or scope by file:
@@ -298,12 +298,17 @@ every abandon — the local signal is otherwise stuck on its pre-checkout value.
 
 Two rules follow from an order being cancellable before payment:
 
-- **Both listings hide orders that are `cancelled` with `paymentStatus` `pending`/`failed`.**
-  Those are abandoned checkouts, not purchases; listing them made a dismissed Razorpay
-  modal look like a placed order. `NOT_ABANDONED` and `isAbandoned()` in
-  `order.controller.js` are the one definition, shared by `listMyOrders`, `listAllOrders`
-  (which also feeds the admin dashboard and user-detail page) and the live stream.
-  `GET /api/orders/all?includeAbandoned=true` brings them back for reconciliation.
+- **Both listings hide abandoned checkouts — orders with `abandoned: true`.** Only
+  `abandonOrder` (Razorpay modal dismissed, or payment failed) sets that flag. Those are
+  checkouts, not purchases; listing them made a dismissed modal look like a placed order.
+  Do **not** go back to inferring it from "`cancelled` + `paymentStatus` pending/failed":
+  an admin or customer cancelling an unpaid online order has that same shape, and the old
+  rule made such a cancellation vanish from the list instead of showing Cancelled.
+  `NOT_ABANDONED` and `isAbandoned()` in `order.controller.js` are the one definition,
+  shared by `listMyOrders`, `listAllOrders` (which also feeds the admin dashboard and
+  user-detail page) and the live stream. `npm run setup` backfills the flag onto orders
+  written before it existed. `GET /api/orders/all?includeAbandoned=true` brings them back
+  for reconciliation.
 - **`verifyPayment` refuses an order whose `status` is `cancelled`.** Its stock is already
   back in the pool, so a late callback marking it paid would leave it cancelled and paid
   at once, holding stock that has been given away. `'cod'` skips Razorpay entirely and is

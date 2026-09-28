@@ -121,6 +121,7 @@ export async function abandonOrder(order, { reason = 'failed' } = {}) {
     await restoreCart(order, session);
 
     order.status = 'cancelled';
+    order.abandoned = true;
     order.paymentStatus = reason === 'cancelled' ? 'pending' : 'failed';
     recordActivity(
       order,

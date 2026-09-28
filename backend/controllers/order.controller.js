@@ -103,14 +103,12 @@ export async function placeOrder(req, res) {
   }
 }
 
-const ABANDONED_PAYMENT_STATES = ['pending', 'failed'];
-
-const NOT_ABANDONED = {
-  $nor: [{ status: 'cancelled', paymentStatus: { $in: ABANDONED_PAYMENT_STATES } }],
-};
+// Keyed on the explicit flag, not on "cancelled + unpaid": an admin cancelling an unpaid
+// online order matched that shape too, so the order vanished instead of showing Cancelled.
+const NOT_ABANDONED = { abandoned: { $ne: true } };
 
 function isAbandoned(order) {
-  return order.status === 'cancelled' && ABANDONED_PAYMENT_STATES.includes(order.paymentStatus);
+  return order.abandoned === true;
 }
 
 export async function listMyOrders(req, res) {

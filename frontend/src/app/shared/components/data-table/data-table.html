@@ -140,11 +140,10 @@
           <span>Rows</span>
           <select
             class="adm-select dt__size-select"
-            [value]="size()"
             (change)="changeSize(+$any($event.target).value)"
           >
             @for (option of pageSizeOptions(); track option) {
-              <option [value]="option">{{ option }}</option>
+              <option [value]="option" [selected]="option === size()">{{ option }}</option>
             }
           </select>
         </label>
